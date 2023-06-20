@@ -1,0 +1,91 @@
+---
+import { Icon } from 'astro-icon';
+import Link from './Link.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer>
+    <div class="inner">
+        <div>
+            <h1>Noter.</h1>
+            <p>{year} &copy; Noter., LLC. and Pocolifo, LLC.</p>
+        </div>
+
+        <div>
+            <h2>Product</h2>
+
+            <ul>
+                <li><Link href="/subscribe">Subscribe</Link></li>
+                <li><Link href="/refer">Refer Friends</Link></li>
+                <li><Link href="/trial">Free Trial</Link></li>
+                <li><Link href="/tutoring-companies">Tutoring Companies</Link></li>
+            </ul>
+        </div>
+
+        <div>
+            <h2>Connect</h2>
+            
+            <div class="socials">
+                <a href="/to/tiktok"><Icon class="icon" name="cib:tiktok" /></a>
+                <a href="/to/instagram"><Icon class="icon" name="cib:instagram" /></a>
+                <a href="/to/youtube"><Icon class="icon" name="cib:youtube" /></a>
+                <a href="/to/email"><Icon class="icon" name="fe:mail" /></a>
+            </div>
+
+        </div>
+
+        <div>
+            <h2>Legal</h2>
+
+            <ul>
+                <li><Link href="/legal/terms">Terms of Service</Link></li>
+                <li><Link href="/legal/privacy">Privacy</Link></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<style>
+    footer {
+        font-size: max(1.5em, 1vw);
+        width: 100%;
+        background: #ffffff;
+        border-top: 2px solid #000000;
+    }
+
+    footer .inner {
+        width: 75%;
+        margin: auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        padding: 2.5rem;
+        gap: 3rem;
+    }
+
+    .socials {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .socials .icon {
+        width: 2rem;
+        height: 2rem;
+        color: #000000;
+        transition: color 0.1s linear;
+    }
+    
+    .socials .icon:hover {
+        color: #0ea5e9;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+        gap: 1rem;
+    }
+    
+    ul li {
+        margin-bottom: 1rem;
+    }
+</style>

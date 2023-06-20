@@ -1,0 +1,73 @@
+---
+import AnimationSide from "../AnimationSide.astro";
+import DesktopAnimationContainer from "../DesktopAnimationContainer.astro";
+import TextAndContentSection from "../TextAndContentSection.astro";
+import TextSide from "../TextSide.astro";
+import GenerateStudyGuidesAnimation from "./GenerateStudyGuidesAnimation";
+
+---
+
+<TextAndContentSection>
+    <TextSide>
+        <p>Generate a personalized study guide <strong>hands-free</strong> with <strong>a few clicks</strong>.</p>
+    </TextSide>
+    
+    <AnimationSide>
+        <DesktopAnimationContainer>
+            <GenerateStudyGuidesAnimation client:visible />
+        </DesktopAnimationContainer>
+    </AnimationSide>
+
+    <!-- <div class="outer-sg">
+        <div class="box">
+            <div class="bar">
+                <h1>Create...</h1>
+
+                <Icon name="fe:close" class="icon" />
+            </div>
+
+            <div class="entries">
+                <div class="animated-button">
+                    <CreateEntryButton name="Study Guide" color="#F472B6" icon="fe:document" />
+                    <Icon name="fa-solid:mouse-pointer" class="mouse" />
+                </div>
+                
+                <CreateEntryButton name="Note" color="#C084FC" icon="fe:book" />
+                <CreateEntryButton name="Folder" color="#60A5FA" icon="fe:folder" />
+            </div>
+
+            <div class="select-notes">
+                <AddNoteButton name="1.1 Biology Review" />
+                <AddNoteButton name="1.2 Cells" />
+                <AddNoteButton name="1.3 Macromolecules" />
+
+                <p class="button">Generate study guide with selected notes</p>
+                <p class="button">Generate study guide from all notes in this folder</p>
+            </div>
+        </div>
+
+        <div class="generated-study-guide">
+            <h1 class="magic">1.1-1.3 Study Guide</h1>
+            
+            <div class="magic">
+                <h2>Summary</h2>
+                <p>Biology studies living organisms and their interactions. It explores characteristics like organization, energy use, growth, reproduction, response, and evolution. The levels of organization range from atoms to ecosystems. The scientific method guides inquiry in biology. Life is classified into Bacteria, Archaea, and Eukarya domains. Cells are the basic units of life. Energy processes include respiration and photosynthesis. Genetics focuses on heredity, DNA, and inheritance. Evolution is driven by natural selection, evidenced by fossils and structural similarities. Biology reveals the diversity and interconnectedness of life.</p>
+            </div>
+            
+            <div class="magic">
+                <h2>Vocbaulary to know</h2>
+                <ul>
+                    <li><strong>Prokaryote:</strong> A single-celled organism that lacks a nucleus and membrane-bound organelles.</li>
+                    <li><strong>Eukaryote:</strong> An organism with cells that have a nucleus and membrane-bound organelles.</li>
+                    <li><strong>DNA:</strong> Deoxyribonucleic acid, a molecule carrying genetic information in cells.</li>
+                  </ul>
+
+            </div>
+            
+            <p class="magic button">Quiz me on this vocbaulary</p>
+
+            <h2 class="magic">Practice Questions</h2>
+            <p class="magic"></p>
+        </div>
+    </div> -->
+</TextAndContentSection>

@@ -1,0 +1,31 @@
+.blocksContainer {
+    background: #ffffff;
+    color: #000000;
+    box-shadow: #00000044 2px 2px 10px;
+    opacity: 1;
+    border-radius: 1rem;
+    position: absolute;
+    width: 75%;
+    
+    left: 50%;
+    top: 50%;
+    transform: scale(1) translate(-50%, -50%);
+    transform-origin: center;
+
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.blocksContainer.hidden {
+    transform: scale(0) translate(-50%, -50%);
+    opacity: 0;
+}
+
+.blocksContainer h1 {
+    margin: 0 0 1rem 0;
+}
+
+.blocksContainer .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1rem;
+}

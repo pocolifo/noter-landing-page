@@ -1,0 +1,20 @@
+---
+import AnimationSide from "../AnimationSide.astro";
+import DesktopAnimationContainer from "../DesktopAnimationContainer.astro";
+import TextAndContentSection from "../TextAndContentSection.astro";
+import TextSide from "../TextSide.astro";
+import QuizAnimation from "./QuizAnimation";
+
+---
+
+<TextAndContentSection>
+    <AnimationSide>
+        <DesktopAnimationContainer>
+            <QuizAnimation client:visible />
+        </DesktopAnimationContainer>
+    </AnimationSide>
+
+    <TextSide>
+        <p><strong>Get quizzed</strong> on your notes to <strong>ace your next test</strong>.</p>
+    </TextSide>
+</TextAndContentSection>

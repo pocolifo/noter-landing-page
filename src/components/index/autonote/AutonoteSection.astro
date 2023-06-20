@@ -1,0 +1,21 @@
+---
+import AnimationSide from "../AnimationSide.astro";
+import PhoneAnimationContainer from "../PhoneAnimationContainer.astro";
+import TextAndContentSection from "../TextAndContentSection.astro";
+import TextSide from "../TextSide.astro";
+import AutonoteAnimation from "./AutonoteAnimation";
+
+---
+
+<TextAndContentSection>
+    <AnimationSide style="text-align: center;">
+        <PhoneAnimationContainer>
+            <h1>1.2 Cells</h1>
+            <AutonoteAnimation client:visible />
+        </PhoneAnimationContainer>
+    </AnimationSide>
+
+    <TextSide>
+        <p>Or, use <strong>hands-free notetaking</strong>, so you can <strong>focus</strong> on your lecture.</p>
+    </TextSide>
+</TextAndContentSection>

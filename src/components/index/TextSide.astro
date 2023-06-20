@@ -1,0 +1,22 @@
+<style>
+    .text {
+		width: 90%;
+        font-size: 4vw;
+        margin: auto;
+    }
+
+    .text p {
+        word-wrap: break-word;
+    }
+
+	@media only screen and (max-width: 1000px) {
+        .text {
+            font-size: 5vh;
+        }
+    }
+</style>
+
+
+<div class="text">
+    <slot />
+</div>

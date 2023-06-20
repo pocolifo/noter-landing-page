@@ -1,0 +1,20 @@
+.bar {
+    background: #000000;
+    width: 10px;
+    border-radius: 1rem;
+    animation: bounce 2s ease infinite;
+}
+
+@keyframes bounce {
+    0% { transform: scaleY(1); }
+    10% { transform: scaleY(0.8); }
+    20% { transform: scaleY(0.5); }
+    30% { transform: scaleY(0.9); }
+    40% { transform: scaleY(1.1); }
+    50% { transform: scaleY(0.5); }
+    60% { transform: scaleY(0.7); }
+    70% { transform: scaleY(1.1); }
+    80% { transform: scaleY(0.9); }
+    90% { transform: scaleY(0.7); }
+    100% { transform: scaleY(0.9); }
+}

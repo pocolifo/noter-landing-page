@@ -1,0 +1,24 @@
+---
+import QuizSection from "../components/index/quiz/QuizSection.astro";
+import ScreenTextSection from "../components/index/ScreenTextSection.astro";
+import SummarizerSection from "../components/index/summarizer/SummarizerSection.astro";
+import TypewriterSection from "../components/index/typewriter/TypewriterSection.astro";
+import AutonoteSection from "../components/index/autonote/AutonoteSection.astro";
+import GenerateStudyGuidesSection from "../components/index/generatestudyguide/GenerateStudyGuidesSection.astro";
+import TakeNotesSection from "../components/index/takenotes/TakeNotesSection.astro";
+import Layout from "../layouts/Layout.astro";
+import PortabilitySection from "../components/index/portablility/PortabilitySection.astro";
+---
+<Layout title="home">
+    <ScreenTextSection>
+        <h1>Noter. It's your AI-powered notebook.</h1>
+    </ScreenTextSection>
+
+    <TakeNotesSection />
+    <AutonoteSection />
+    <SummarizerSection />
+    <QuizSection />
+    <GenerateStudyGuidesSection />
+    <PortabilitySection />
+    <TypewriterSection />
+</Layout>

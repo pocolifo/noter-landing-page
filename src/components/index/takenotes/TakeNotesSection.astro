@@ -1,0 +1,19 @@
+---
+import AnimationSide from "../AnimationSide.astro";
+import PhoneAnimationContainer from "../PhoneAnimationContainer.astro";
+import TextAndContentSection from "../TextAndContentSection.astro";
+import TextSide from "../TextSide.astro";
+import NoteTakingAnimation from "./NoteTakingAnimation";
+
+---
+<TextAndContentSection>
+    <TextSide>
+        <p>Take your <strong>notes</strong> and <strong>customize</strong> them.</p>
+    </TextSide>
+    
+    <AnimationSide>
+        <PhoneAnimationContainer>
+            <NoteTakingAnimation client:visible />
+        </PhoneAnimationContainer>
+    </AnimationSide>
+</TextAndContentSection>

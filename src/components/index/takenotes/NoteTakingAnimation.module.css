@@ -1,0 +1,29 @@
+.container {
+    position: relative;
+    padding: 1rem;
+}
+
+.title {
+    font-size: 2em;
+    margin: 1rem;
+    text-align: center;
+}
+
+.contentImage {
+    width: 100%;
+    transition: width 0.25s ease;
+}
+
+.contentImage.hideImage {
+    width: 0;
+}
+
+.textBlock {
+    border: #000000 1px solid;
+    padding: 1rem;
+    font-size: 1.25em;
+}
+
+.hideTextBlock {
+    display: none;
+}

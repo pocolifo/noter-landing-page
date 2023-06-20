@@ -1,0 +1,23 @@
+<style>
+    section {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .full {
+        display: flex;
+        font-size: max(2.5vw, 3vh);
+        text-align: center;
+    }
+
+    .full .centered {
+        width: 75%;
+        margin: auto;
+    }
+</style>
+
+<section class="full">
+    <div class="centered">
+        <slot />
+    </div>
+</section>

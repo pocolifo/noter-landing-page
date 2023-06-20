@@ -1,0 +1,87 @@
+---
+import Link from '../../Link.astro';
+import AnimationSide from '../AnimationSide.astro';
+import TextAndContentSection from '../TextAndContentSection.astro';
+import TextSide from '../TextSide.astro';
+---
+<style>
+    .animation {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container {
+        background: #FFFFFF;
+        border: #000000 2px solid;
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        animation: devices 6s ease infinite;
+    }
+
+    .text {
+        padding: 1rem;
+    }
+
+    @keyframes devices {
+        /* Start on mobile look (loops at end) */
+        0% {
+            width: 300px;
+            height: 600px;
+            border-radius: 0.5rem;
+            font-size: 0.75em;
+        }
+
+        /* Transition to desktop look for 10% */
+
+        10% {
+            width: 800px;
+            height: 450px;
+            border-radius: 2rem;
+            font-size: 1.75em;
+        }
+        
+        /* HOLD desktop look for 40% */
+
+        50% {
+            width: 800px;
+            height: 450px;
+            border-radius: 2rem;
+            font-size: 1.75em;
+        }
+
+        /* Transition to mobile look for 10% */
+
+        60% {
+            width: 300px;
+            height: 600px;
+            border-radius: 0.5rem;
+            font-size: 1em;
+        }
+        
+        /* HOLD for 40% mobile look until end */
+
+        100% {
+            width: 300px;
+            height: 600px;
+            border-radius: 0.5rem;
+            font-size: 1em;
+        }
+    }
+</style>
+
+<TextAndContentSection>
+    <div class="animation">
+        <div class="container">
+            <h1 class="text">Noter. It's your AI-powered notebook.</h1>
+        </div>
+    </div>
+
+    <TextSide>
+        <p>It goes <strong>where you go</strong> for when you're <strong>on the go</strong>.</p>
+    </TextSide>
+</TextAndContentSection>

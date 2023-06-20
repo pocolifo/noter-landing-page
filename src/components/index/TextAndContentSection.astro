@@ -1,0 +1,19 @@
+<style>
+	section {
+		width: 100vw;
+		min-height: 60vh;
+        display: grid;
+        grid-template-columns: 50% 50%;
+        grid-template-rows: 1fr;
+    }
+
+	@media only screen and (max-width: 1000px) {
+		section {
+			display: block;
+		}
+    }
+</style>
+
+<section>
+    <slot />
+</section>

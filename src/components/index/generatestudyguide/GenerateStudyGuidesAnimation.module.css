@@ -1,0 +1,40 @@
+.pages {
+    display: grid;
+    width: 300%;
+    height: 100%;
+
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 100%;
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.page h1 {
+    font-size: 2em;
+    margin: 0;
+}
+
+.scrollContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.creationOptionsRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1vw;
+    margin: auto;
+    width: 75%;
+}
+
+.textBox {
+    border-bottom: #000000 1px solid;
+    margin: 0;
+}
