@@ -1,8 +1,10 @@
 import { For, createSignal } from 'solid-js';
-import Mouse, { MouseController } from "../Mouse";
+import type { MouseController } from "../Mouse";
 import styles from '../generatestudyguide/GenerateStudyGuidesAnimation.module.css';
 import quizStyles from './QuizAnimation.module.css';
 import buttonStyles from '../Button.module.css'
+import AnimationStarter, { AnimationContainerType } from '../AnimationContainer';
+import AnimationContainer from '../AnimationContainer';
 
 const QUESTIONS = [
     [
@@ -41,6 +43,9 @@ export default function QuizAnimation() {
     async function runAnimation(mouse: MouseController) {
         if (scrollContainer === undefined || circleSvg === undefined) return;
 
+        setQuestionIndex(0);
+        setShowAnswers(false);
+        circleSvg.classList.remove(quizStyles.animateIn);
         scrollContainer.scrollTo(0, 0);
         mouse.show();
 
@@ -76,9 +81,7 @@ export default function QuizAnimation() {
     }
 
     return (
-        <>
-            <Mouse animateFunction={runAnimation} color="#000000" />
-
+        <AnimationContainer type={AnimationContainerType.DESKTOP} animateFunction={runAnimation}>
             <div class={styles.scrollContainer} ref={scrollContainer}>
                 <div class={styles.pages} style={{ "grid-template-columns": "1fr 1fr 1fr 1fr", "width": "400%" }}>
                     {/* 3 questions, 3 pages */}
@@ -120,6 +123,6 @@ export default function QuizAnimation() {
                     </div>
                 </div>
             </div>
-        </>
+        </AnimationContainer>
     )
 }

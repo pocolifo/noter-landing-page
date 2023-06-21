@@ -1,10 +1,12 @@
-import Mouse, { MouseController } from "../Mouse";
+import type { MouseController } from "../Mouse";
 import CreateEntryButton from "./CreateEntryButton";
 import ExampleNote from "./ExampleNote";
 import styles from './GenerateStudyGuidesAnimation.module.css';
 import buttonStyles from '../Button.module.css'
 import { createSignal } from "solid-js";
 import Magic from "../Magic";
+import AnimationStarter, { AnimationContainerType } from "../AnimationContainer";
+import AnimationContainer from "../AnimationContainer";
 
 const STUDY_GUIDE_NAME = '1.1-1.3 Study Guide';
 
@@ -18,7 +20,11 @@ export default function GenerateStudyGuidesAnimation() {
 
     async function runAnimation(mouse: MouseController) {
         if (studyGuideButton === undefined || scrollContainer === undefined || textBox === undefined || generateFromFolder === undefined) return;
+
+        textBox.textContent = 'New study guide';
         scrollContainer.scrollTo(0, 0);
+        setCharacterIndex(0);
+        setMagicDone(false);
         
         mouse.goTo(studyGuideButton);
         mouse.show();
@@ -45,7 +51,7 @@ export default function GenerateStudyGuidesAnimation() {
                 if (textBox === undefined) return;
     
                 setCharacterIndex(characterIndex() + 3);
-                textBox.innerHTML = STUDY_GUIDE_NAME.substring(0, characterIndex());
+                textBox.textContent = STUDY_GUIDE_NAME.substring(0, characterIndex());
 
                 if (characterIndex() > STUDY_GUIDE_NAME.length) {
                     clearInterval(interval);
@@ -77,7 +83,7 @@ export default function GenerateStudyGuidesAnimation() {
     }
 
     return (
-        <>
+        <AnimationContainer type={AnimationContainerType.DESKTOP} animateFunction={runAnimation}>
             <div class={styles.scrollContainer} ref={scrollContainer}>
                 <div class={styles.pages}>
                     {/* Create page */}
@@ -140,8 +146,6 @@ export default function GenerateStudyGuidesAnimation() {
                     </div>
                 </div>
             </div>
-
-            <Mouse animateFunction={runAnimation} color="#000000" />
-        </>
+        </AnimationContainer>
     )
 }

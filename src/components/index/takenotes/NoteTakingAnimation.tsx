@@ -2,9 +2,11 @@ import { Setter, createSignal } from 'solid-js';
 import styles from './NoteTakingAnimation.module.css';
 import blockLibraryStyles from './BlockLibrary.module.css';
 import AddBlock from './AddBlock';
-import Mouse, { MouseController } from '../Mouse';
+import type { MouseController } from '../Mouse';
 import BlockCard from './BlockCard';
 import BlockLibrary from './BlockLibrary';
+import AnimationStarter, { AnimationContainerType } from '../AnimationContainer';
+import AnimationContainer from '../AnimationContainer';
 
 const NOTES = [
     'Biology is the study of living organisms and their interactions with the environment',
@@ -16,6 +18,8 @@ const JOINED_NOTES = NOTES.join("\n");
 const IMAGE_URL = 'https://unsplash.com/photos/8o_LkMpo8ug/download?ixid=M3wxMjA3fDB8MXxzZWFyY2h8NXx8ZG5hfGVufDB8MHx8fDE2ODcxOTA3ODZ8MA&force=true&w=640';
 
 export default function NoteTakingAnimation() {
+    const [ showImage, setShowImage ] = createSignal<boolean>(false);
+    const [ showLibrary, setShowLibrary ] = createSignal<boolean>(false);
     let image: HTMLImageElement | undefined = undefined;
     let addBlock: HTMLElement | undefined = undefined;
     let library: HTMLDivElement | undefined = undefined;
@@ -24,9 +28,16 @@ export default function NoteTakingAnimation() {
 
     const [ characterIndex, setCharacterIndex ] = createSignal<number>(0);
 
-    async function withMouseFunctions(controller: MouseController) {
+    function resetAnimation(controller: MouseController) {
+        setShowImage(false);
+        setShowLibrary(false);
+    }
+
+    async function runAnimation(controller: MouseController) {
         if (addBlock === undefined || image === undefined || library === undefined || textBlockButton === undefined || textBlock === undefined) return;
 
+        image.classList.add(styles.hideImage);
+        library.classList.add(blockLibraryStyles.hidden);
         controller.goTo(textBlockButton);
         controller.setAttachedImage(IMAGE_URL);
         controller.show();
@@ -77,9 +88,7 @@ export default function NoteTakingAnimation() {
     }
 
     return (
-        <>
-            <Mouse animateFunction={withMouseFunctions} color="#000000" /> 
-            
+        <AnimationContainer type={AnimationContainerType.PHONE} animateFunction={runAnimation}>
             <div class={styles.container}>
                 <h1 class={styles.title}>1.1 Biology Review</h1>
 
@@ -95,6 +104,6 @@ export default function NoteTakingAnimation() {
                     <BlockCard ref={undefined} name="Table" icon={<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g id="feTable0" fill="none" fill-rule="evenodd" stroke="none" stroke-width="1"><g id="feTable1" fill="currentColor" fill-rule="nonzero"><path id="feTable2" d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm9 10v4h7v-4h-7Zm-9 0v4h7v-4H4Zm9-6v4h7V8h-7ZM4 8v4h7V8H4Z"/></g></g></svg>} />
                 </BlockLibrary>
             </div>
-        </>
+        </AnimationContainer>
     )
 }

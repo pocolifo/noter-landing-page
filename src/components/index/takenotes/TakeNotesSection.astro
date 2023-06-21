@@ -1,6 +1,5 @@
 ---
 import AnimationSide from "../AnimationSide.astro";
-import PhoneAnimationContainer from "../PhoneAnimationContainer.astro";
 import TextAndContentSection from "../TextAndContentSection.astro";
 import TextSide from "../TextSide.astro";
 import NoteTakingAnimation from "./NoteTakingAnimation";
@@ -12,8 +11,6 @@ import NoteTakingAnimation from "./NoteTakingAnimation";
     </TextSide>
     
     <AnimationSide>
-        <PhoneAnimationContainer>
-            <NoteTakingAnimation client:visible />
-        </PhoneAnimationContainer>
+        <NoteTakingAnimation client:visible />
     </AnimationSide>
 </TextAndContentSection>

@@ -1,103 +1,11 @@
-// let wordI = 0;
-// let content = document.querySelector('.autonote-content');
-// let transcript = document.querySelector('.transcript');
-// let timestamp = document.querySelector('.timestamp');
-// let updateTimestampInterval: number;
-// let updateTranscriptTimeout: number;
-// let animationStartTime: number;
-
 import { For, Match, Show, Switch, createSignal } from "solid-js";
 import AudioBar from "./AudioBar";
 import buttonStyles from '../Button.module.css'
-
-
-// function showMagicGeneration() {
-//     if (transcript !== null) {
-//         transcript.innerHTML = '';
-//         let list = document.createElement('ul');
-
-//         for (let i = 0; 3 > i; i++) {
-//             let element = document.createElement('li');
-//             element.classList.add('magic');
-//             element.style.width = `${50 + i * 10}%`;
-//             element.textContent = notes[i];
-//             list.appendChild(element);
-
-//             setTimeout(() => {
-//                 element.style.width = `100%`;
-//                 element.classList.add('done');
-//             }, 2000);
-//         }
-
-//         transcript.appendChild(list);
-
-//         setTimeout(() => {
-//             if (transcript !== null) {
-//                 let suggestion = document.createElement('div');
-//                 suggestion.classList.add('suggestion');
-//                 suggestion.textContent = 'Add cell diagram image';
-//                 transcript.appendChild(suggestion);
-//             }
-//         }, 3000);
-//     }
-// }
-
-// function updateTimestamp() {
-//     if (timestamp !== null) {
-//         let elapsed = new Date(Date.now() - animationStartTime);
-//         timestamp.textContent = `23:${addLeadingZeroIfNeeded(elapsed.getSeconds())}`;
-//     }
-// }
-
-// function animationStep() {
-//     updateTranscriptTimeout = setTimeout(() => {
-//         if (transcript !== null && text.length > wordI) {
-//             wordI += 1;
-//             transcript.textContent = text.slice(0, wordI).join(" ");
-//             animationStep();
-//         } else if (content !== null) {
-//             content.classList.remove('animate');
-//             clearInterval(updateTimestampInterval);
-//             showMagicGeneration();
-//         }
-//     }, Math.random() * 250);
-// }
-
-// function startAnimation() {
-//     animationStartTime = Date.now();
-//     updateTimestamp();
-//     animationStep();
-
-//     if (content !== null) {
-//         content.classList.add('animate');
-//     }
-    
-//     updateTimestampInterval = setInterval(updateTimestamp, 1000);
-// }
-
-// function resetAnimation() {
-//     if (transcript !== null && content !== null) {
-//         clearTimeout(updateTranscriptTimeout);
-//         transcript.textContent = '';
-//         clearInterval(updateTimestampInterval);
-//         wordI = 0;
-//         content.classList.remove('animate');
-//     }
-// }
-
-// if (content !== null) {
-//     new IntersectionObserver(([entry]) => {
-//         if (entry.isIntersecting) {
-//             startAnimation();
-//         } else {
-//             resetAnimation();
-//         }
-//     }, { threshold: 0.6}).observe(content);
-// }
-
 import styles from "./Autonote.module.css";
-import Mouse, { MouseController } from "../Mouse";
+import type { MouseController } from "../Mouse";
 import Magic from "../Magic";
+import AnimationStarter, { AnimationContainerType } from "../AnimationContainer";
+import AnimationContainer from "../AnimationContainer";
 
 const WORDS = "Prokaryotic cells lack a nucleus and other membrane-bound organelles, whereas eukaryotic cells possess a nucleus and various specialized organelles. These cells are the building blocks of all living organisms, carrying out essential functions that sustain life.".split(" ");
 const BULLET_POINTS = ["Prokaryotes: no nucleus or membrane-bound organelles", "Eurkaryotes: have nucleus and specialized organelles", "Cells are the building blocks of living organisms"]
@@ -135,7 +43,6 @@ export default function AutonoteAnimation() {
     let wordUpdateInterval: number;
     let timeUpdateInterval: number;
 
-
     function startTranscript() {
         wordUpdateInterval = setInterval(() => {
             if (WORDS.length > wordIndex()) {
@@ -155,7 +62,11 @@ export default function AutonoteAnimation() {
 
     async function runAnimation(mc: MouseController) {
         if (startRecordingButton === undefined || timestamp === undefined || doneButton === undefined) return;
-
+        
+        clearInterval(wordUpdateInterval);
+        clearInterval(timeUpdateInterval);
+        setWordIndex(0);
+        setSecond(0);
         setPhase(AnimationPhase.PRE_RECORDING);
 
         mc.goTo(timestamp);
@@ -203,9 +114,9 @@ export default function AutonoteAnimation() {
     }
 
     return (
-        <>
-            <Mouse animateFunction={ runAnimation } color="#000000" />
-
+        <AnimationContainer type={AnimationContainerType.PHONE} animateFunction={runAnimation}>
+            <h1>1.2 Cells</h1>
+            
             <div classList={{
                 [styles.row]: true,
                 [styles.audioRow]: true,
@@ -267,6 +178,6 @@ export default function AutonoteAnimation() {
                     <p class={buttonStyles.button} ref={doneButton}>Done</p>
                 </div>
             </Show>
-        </>
+        </AnimationContainer>
     )
 }

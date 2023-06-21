@@ -1,0 +1,20 @@
+.animationContainer {
+    background: #FFFFFF;
+    border: #000000 2px solid;
+    border-radius: 1rem;
+    overflow: auto;
+    box-shadow: #00000044 0px 0px 20px;
+    
+    display: flex;
+    flex-direction: column;
+}
+
+.phone {
+    width: 350px;
+    height: 650px;
+}
+
+.desktop {
+    width: 800px;
+    height: 450px;
+}

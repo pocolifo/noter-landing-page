@@ -1,6 +1,5 @@
 ---
 import AnimationSide from "../AnimationSide.astro";
-import DesktopAnimationContainer from "../DesktopAnimationContainer.astro";
 import TextAndContentSection from "../TextAndContentSection.astro";
 import TextSide from "../TextSide.astro";
 import QuizAnimation from "./QuizAnimation";
@@ -9,9 +8,7 @@ import QuizAnimation from "./QuizAnimation";
 
 <TextAndContentSection>
     <AnimationSide>
-        <DesktopAnimationContainer>
-            <QuizAnimation client:visible />
-        </DesktopAnimationContainer>
+        <QuizAnimation client:visible />
     </AnimationSide>
 
     <TextSide>

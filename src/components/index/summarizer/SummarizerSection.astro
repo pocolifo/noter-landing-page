@@ -3,7 +3,6 @@ import { Icon } from "astro-icon";
 import TextAndContentSection from "../TextAndContentSection.astro";
 import TextSide from "../TextSide.astro";
 import SummarizerAnimation from "./SummarizerAnimation";
-import DesktopAnimationContainer from "../DesktopAnimationContainer.astro";
 import AnimationSide from "../AnimationSide.astro";
 
 ---
@@ -13,8 +12,6 @@ import AnimationSide from "../AnimationSide.astro";
     </TextSide>
 
     <AnimationSide>
-        <DesktopAnimationContainer>
-            <SummarizerAnimation client:visible />
-        </DesktopAnimationContainer>
+        <SummarizerAnimation client:visible />
     </AnimationSide>
 </TextAndContentSection>

@@ -1,7 +1,9 @@
 import { For, Match, Switch, createSignal } from "solid-js";
 import Magic from "../Magic";
 import styles from './SummarizerAnimation.module.css';
-import Mouse, { MouseController } from "../Mouse";
+import type { MouseController } from "../Mouse";
+import AnimationStarter, { AnimationContainerType } from "../AnimationContainer";
+import AnimationContainer from "../AnimationContainer";
 
 const BULLET_POINTS = [
     'Biology studies living organisms and their interactions with the environment.',
@@ -38,9 +40,7 @@ export default function SummarizerAnimation() {
     }
 
     return (
-        <>
-            <Mouse animateFunction={runAnimation} color="#000000" />
-
+        <AnimationContainer noRestart={true} type={AnimationContainerType.DESKTOP} animateFunction={runAnimation}>
             <div class={styles.bar}>
                 <h1>Summary</h1>
 
@@ -80,6 +80,6 @@ export default function SummarizerAnimation() {
                     </div>
                 </Match>
             </Switch>
-        </>
+        </AnimationContainer>
     )
 }
