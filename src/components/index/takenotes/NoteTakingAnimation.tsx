@@ -18,28 +18,24 @@ const JOINED_NOTES = NOTES.join("\n");
 const IMAGE_URL = 'https://unsplash.com/photos/8o_LkMpo8ug/download?ixid=M3wxMjA3fDB8MXxzZWFyY2h8NXx8ZG5hfGVufDB8MHx8fDE2ODcxOTA3ODZ8MA&force=true&w=640';
 
 export default function NoteTakingAnimation() {
-    const [ showImage, setShowImage ] = createSignal<boolean>(false);
-    const [ showLibrary, setShowLibrary ] = createSignal<boolean>(false);
+    const [ characterIndex, setCharacterIndex ] = createSignal<number>(0);
     let image: HTMLImageElement | undefined = undefined;
     let addBlock: HTMLElement | undefined = undefined;
     let library: HTMLDivElement | undefined = undefined;
     let textBlockButton: HTMLDivElement | undefined = undefined;
     let textBlock: HTMLDivElement | undefined = undefined;
 
-    const [ characterIndex, setCharacterIndex ] = createSignal<number>(0);
-
-    function resetAnimation(controller: MouseController) {
-        setShowImage(false);
-        setShowLibrary(false);
-    }
-
     async function runAnimation(controller: MouseController) {
         if (addBlock === undefined || image === undefined || library === undefined || textBlockButton === undefined || textBlock === undefined) return;
 
+        setCharacterIndex(0);
         image.classList.add(styles.hideImage);
         library.classList.add(blockLibraryStyles.hidden);
+        textBlock.classList.add(styles.hideTextBlock);
+        textBlock.innerHTML = "This is your new text block";
         controller.goTo(textBlockButton);
         controller.setAttachedImage(IMAGE_URL);
+        await controller.wait(500);
         controller.show();
 
         await controller.move(addBlock);
