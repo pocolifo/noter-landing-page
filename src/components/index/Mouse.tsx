@@ -108,8 +108,8 @@ export default function Mouse(props: Props) {
     return (
         // https://icon-sets.iconify.design/fa-solid/mouse-pointer/
         <div ref={props.ref} class={`${styles.hidden} ${styles.container}`}>
-            <Show when={props.attachedImage() !== null}>
-                <img src={props.attachedImage()} class={styles.image} />
+            <Show when={props.attachedImage() !== undefined}>
+                <img src={props.attachedImage()} class={styles.image} alt='Image being dragged by a cursor' />
             </Show>
 
             <svg xmlns="http://www.w3.org/2000/svg" width="320" height="512" viewBox="0 0 320 512" style={{
