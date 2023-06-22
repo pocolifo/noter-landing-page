@@ -6,6 +6,7 @@ import type { MouseController } from "../Mouse";
 import Magic from "../Magic";
 import AnimationStarter, { AnimationContainerType } from "../AnimationContainer";
 import AnimationContainer from "../AnimationContainer";
+import AutonoteImage from "./AutonoteImage";
 
 const WORDS = "Prokaryotic cells lack a nucleus and other membrane-bound organelles, whereas eukaryotic cells possess a nucleus and various specialized organelles. These cells are the building blocks of all living organisms, carrying out essential functions that sustain life.".split(" ");
 const BULLET_POINTS = ["Prokaryotes: no nucleus or membrane-bound organelles", "Eurkaryotes: have nucleus and specialized organelles", "Cells are the building blocks of living organisms"]
@@ -62,7 +63,7 @@ export default function AutonoteAnimation() {
 
     async function runAnimation(mc: MouseController) {
         if (startRecordingButton === undefined || timestamp === undefined || doneButton === undefined) return;
-        
+
         clearInterval(wordUpdateInterval);
         clearInterval(timeUpdateInterval);
         setWordIndex(0);
@@ -162,7 +163,7 @@ export default function AutonoteAnimation() {
                                 Suggestion: Add cell image
                             </p>
                         }>
-                            <img class={styles.animateIn} src='https://upload.wikimedia.org/wikipedia/commons/4/48/Animal_cell_structure_en.svg' />
+                            <img class={styles.animateIn} src={AutonoteImage} alt="Image in note document" />
                         </Show>
                     </Match>
                 </Switch>

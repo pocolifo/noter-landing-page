@@ -7,6 +7,7 @@ import BlockCard from './BlockCard';
 import BlockLibrary from './BlockLibrary';
 import AnimationStarter, { AnimationContainerType } from '../AnimationContainer';
 import AnimationContainer from '../AnimationContainer';
+import NoteTakingImage from './NoteTakingImage';
 
 const NOTES = [
     'Biology is the study of living organisms and their interactions with the environment',
@@ -15,7 +16,6 @@ const NOTES = [
 ];
 
 const JOINED_NOTES = NOTES.join("\n");
-const IMAGE_URL = 'https://unsplash.com/photos/8o_LkMpo8ug/download?ixid=M3wxMjA3fDB8MXxzZWFyY2h8NXx8ZG5hfGVufDB8MHx8fDE2ODcxOTA3ODZ8MA&force=true&w=640';
 
 export default function NoteTakingAnimation() {
     const [ characterIndex, setCharacterIndex ] = createSignal<number>(0);
@@ -34,7 +34,7 @@ export default function NoteTakingAnimation() {
         textBlock.classList.add(styles.hideTextBlock);
         textBlock.innerHTML = "This is your new text block";
         controller.goTo(textBlockButton);
-        controller.setAttachedImage(IMAGE_URL);
+        controller.setAttachedImage(NoteTakingImage);
         await controller.wait(500);
         controller.show();
 
@@ -88,7 +88,7 @@ export default function NoteTakingAnimation() {
             <div class={styles.container}>
                 <h1 class={styles.title}>1.1 Biology Review</h1>
 
-                <img src={IMAGE_URL} ref={image} class={`${styles.hideImage} ${styles.contentImage}`} />
+                <img src={NoteTakingImage} ref={image} class={`${styles.hideImage} ${styles.contentImage}`} alt="Image in note document" />
                 <div ref={textBlock} class={`${styles.textBlock} ${styles.hideTextBlock}`}>This is your new text block</div>
 
                 <AddBlock ref={addBlock} />
