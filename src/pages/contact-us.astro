@@ -1,0 +1,100 @@
+---
+import Link from "../components/Link.astro";
+import type AnimationSide from "../components/index/AnimationSide.astro";
+import ScreenTextSection from "../components/index/ScreenTextSection.astro";
+import Layout from "../layouts/Layout.astro";
+---
+<style>
+    .fullScreen {
+        width: 100vw;
+        height: 100vh;
+        font-size: 2em;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    label::after {
+        content: " *";
+        color: #ff0000;
+    }
+
+    .field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    textarea {
+        resize: none;
+        height: 256px;
+    }
+
+    select, textarea, input {
+        border: #000000 1px solid;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        font-size: 0.75em;
+        background: #FFFFFF;
+        font-family: 'Inter';
+    }
+
+    input[type="submit"]:hover {
+        cursor: pointer;
+        background: #EEEEEE;
+    }
+
+    .padding {
+        padding: 5rem;
+    }
+</style>
+<Layout title="Contact">
+    <div class="fullScreen">
+        <div class="padding">
+            <h1>Contact us</h1>
+            <p>We graciously accept compliments, suggestions, and feedback on our service to make it better for you! Please fill out and submit the form, and we'll get back to you as soon as possible. We look forward to hearing from you!</p>
+
+            <p>Please note that we only allow two submissions per week per IP address to prevent spam.</p>
+        </div>
+
+        <form class="padding">
+            <div class="field">
+                <label for="reason-for-contact">Reason for contact</label>
+
+                <select id="reason-for-contact" required>
+                    <option>Compliment</option>
+                    <option>Suggestion</option>
+                    <option>Feedback</option>
+                    <option>Complaint</option>
+                    <option>Legal/Law</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="subject">Subject</label>
+                <input id="subject" type="text" required />
+            </div>
+
+            <div class="field">
+                <label for="email">Your email</label>
+                <input id="email" type="email" required />
+            </div>
+
+            <div class="field">
+                <label for="text">Your words</label>
+                <textarea id="text" spellcheck="true" autocapitalize="true" required></textarea>
+            </div>
+
+            <input type="submit" value="Send" />
+        </form>
+    </div>
+</Layout>

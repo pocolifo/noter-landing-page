@@ -5,7 +5,9 @@ import Link from "./Link.astro";
 
 <nav>
     <div class="inner">
-        <h1>Noter.</h1>
+        <a href="/">
+            <h1>Noter.</h1>
+        </a>
 
         <div class="right">
             <Link href="/subscribe">Subscribe</Link>
@@ -15,7 +17,6 @@ import Link from "./Link.astro";
 
 <style>
     nav {
-        top: 0;
         width: 100%;
         font-size:1.5em;
         position: fixed;
@@ -33,6 +34,11 @@ import Link from "./Link.astro";
 
     nav .right {
         margin-left: auto;
+    }
+
+    a {
+        color: #000000;
+        text-decoration: none;
     }
 
     @media only screen and (max-width: 1000px) {
