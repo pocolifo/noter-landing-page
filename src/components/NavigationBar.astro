@@ -1,28 +1,40 @@
 ---
 import Link from "./Link.astro";
 
+interface Props {
+    fixed: boolean;
+}
+
+const { fixed } = Astro.props;
 ---
 
-<nav>
+<nav class:list={{
+    'fixed': fixed
+}}>
     <div class="inner">
         <a href="/">
             <h1>Noter.</h1>
         </a>
 
         <div class="right">
-            <Link href="/subscribe">Subscribe</Link>
+            <Link hnk href="/subscribe">Subscribe</Link>
         </div>
     </div>
 </nav>
 
 <style>
     nav {
+        top: 0;
         width: 100%;
-        font-size:1.5em;
-        position: fixed;
+        font-size: 1.5em;
+        position: sticky;
         border-bottom: #000000 2px solid;
         z-index: 100000;
         background: #ffffff;
+    }
+
+    nav.fixed {
+        position: fixed;
     }
     
     nav .inner {

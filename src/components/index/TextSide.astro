@@ -1,8 +1,19 @@
+---
+interface Props {
+    textAlignRight: boolean;
+}
+
+const { textAlignRight } = Astro.props as Props;
+---
 <style>
     .text {
 		width: 90%;
         font-size: 4vw;
         margin: auto;
+    }
+
+    .right {
+        text-align: right;
     }
 
     .text p {
@@ -17,6 +28,9 @@
 </style>
 
 
-<div class="text">
+<div class:list={{
+    "text": true,
+    "right": textAlignRight
+}}>
     <slot />
 </div>

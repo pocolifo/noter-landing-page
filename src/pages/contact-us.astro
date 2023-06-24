@@ -57,13 +57,13 @@ import Layout from "../layouts/Layout.astro";
         padding: 5rem;
     }
 </style>
-<Layout title="Contact">
+<Layout title="Contact" navBarFixed={true}>
     <div class="fullScreen">
         <div class="padding">
             <h1>Contact us</h1>
             <p>We graciously accept compliments, suggestions, and feedback on our service to make it better for you! Please fill out and submit the form, and we'll get back to you as soon as possible. We look forward to hearing from you!</p>
 
-            <p>Please note that we only allow two submissions per week per IP address to prevent spam.</p>
+            <p>Please note that we may limit submissions to prevent spam.</p>
         </div>
 
         <form class="padding">
@@ -76,6 +76,8 @@ import Layout from "../layouts/Layout.astro";
                     <option>Feedback</option>
                     <option>Complaint</option>
                     <option>Legal/Law</option>
+                    <option>Question</option>
+                    <option>Other</option>
                 </select>
             </div>
 
