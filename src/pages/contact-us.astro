@@ -6,8 +6,7 @@ import Layout from "../layouts/Layout.astro";
 ---
 <style>
     .fullScreen {
-        width: 100vw;
-        height: 100vh;
+        min-height: 100vh;
         font-size: 2em;
 
         display: grid;
@@ -57,7 +56,7 @@ import Layout from "../layouts/Layout.astro";
         padding: 5rem;
     }
 </style>
-<Layout title="Contact" navBarFixed={true}>
+<Layout title="Contact" navBarFixed={false}>
     <div class="fullScreen">
         <div class="padding">
             <h1>Contact us</h1>
