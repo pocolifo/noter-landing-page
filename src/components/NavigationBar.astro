@@ -17,7 +17,7 @@ const { fixed } = Astro.props;
         </a>
 
         <div class="right">
-            <Link hnk href="/subscribe">Subscribe</Link>
+            <Link hnk href="/plans">Get Noter</Link>
         </div>
     </div>
 </nav>
@@ -30,7 +30,7 @@ const { fixed } = Astro.props;
         position: sticky;
         border-bottom: #000000 2px solid;
         z-index: 100000;
-        background: #ffffff;
+        backdrop-filter: blur(1rem);
     }
 
     nav.fixed {
@@ -46,6 +46,10 @@ const { fixed } = Astro.props;
 
     nav .right {
         margin-left: auto;
+    }
+
+    h1 {
+        margin: 1.5rem 0 1.5rem 0;
     }
 
     a {

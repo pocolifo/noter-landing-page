@@ -44,6 +44,8 @@ const { id, title, price, unit, features, freeTrialIncluded } = Astro.props as P
         border-radius: 1rem;
         padding: 1rem;
         background: #ffffff;
+        box-shadow: #00000044 0px 0px 20px;
+        max-width: 450px;
     }
 
     .price {
@@ -61,7 +63,7 @@ const { id, title, price, unit, features, freeTrialIncluded } = Astro.props as P
     .feature {
         font-size: 1.15em;
         display: flex;
-        gap: 0.5rem;
+        gap: 0.25rem;
         align-items: center;
     }
 
@@ -86,12 +88,11 @@ const { id, title, price, unit, features, freeTrialIncluded } = Astro.props as P
     }
 
     a:hover {
-        transform: scale(0.9);
         background: #444444;
     }
 
     a:active {
-        transform: scale(0.8);
+        transform: scale(0.9);
         background: #666666;
     }
 </style>
