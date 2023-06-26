@@ -1,0 +1,97 @@
+---
+import { Icon } from 'astro-icon';
+
+interface Props {
+    id: number;
+    title: string;
+    price: string;
+    unit: string | null;
+    freeTrialIncluded: boolean;
+    features: (string | boolean)[][];
+}
+
+const { id, title, price, unit, features, freeTrialIncluded } = Astro.props as Props;
+---
+<div class="outer">
+    <h2>{ title }</h2>
+    
+    <div>
+        <span class="price">{ price }</span>
+
+        { unit && (
+            <span class="unit">{ unit }</span>
+        ) }
+    </div>
+
+    <hr />
+
+    <div class="features">
+        {features.filter(feature => feature[1]).map(([key, val]) => (
+            <div class="feature"><Icon name="mdi:check" /> {key}</div>
+        ))}
+    
+        {features.filter(feature => !feature[1]).map(([key, val]) => (
+            <div class="feature"><Icon name="mdi:close" /> {key}</div>
+        ))}
+    </div>
+
+    <a href={`/subscribe/${id}`}>{ freeTrialIncluded ? 'Start free trial' : 'Sign up' }</a>
+</div>
+
+<style>
+    .outer {
+        border: #000000 2px solid;
+        border-radius: 1rem;
+        padding: 1rem;
+        background: #ffffff;
+    }
+
+    .price {
+        font-size: 3em;
+        font-weight: bold;
+    }
+
+    .features {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin: 1rem 0 1rem 0;
+    }
+
+    .feature {
+        font-size: 1.15em;
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .feature svg {
+        width: 32px;
+        color: #000000;
+        border-radius: 100%;
+    }
+
+    a {
+        display: block;
+        text-align: center;
+        padding: 1rem;
+        font-size: 1.25em;
+        border: none;
+        border-radius: 0.5rem;
+        background: #000000;
+        color: #ffffff;
+        text-decoration: none;
+
+        transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    a:hover {
+        transform: scale(0.9);
+        background: #444444;
+    }
+
+    a:active {
+        transform: scale(0.8);
+        background: #666666;
+    }
+</style>
