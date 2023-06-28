@@ -6,12 +6,20 @@
     padding: 1rem;
 }
 
+@media only screen and (max-width: 500px) {
+    .bar {
+        text-align: center;
+        display: block;
+    }
+}
+
 .bar h1 {
     margin: 0;
 }
 
 .content {
     margin: 0 1rem 0 1rem;
+    overflow: hidden;
 }
 
 .radio {

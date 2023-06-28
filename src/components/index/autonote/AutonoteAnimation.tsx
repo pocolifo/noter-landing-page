@@ -95,7 +95,7 @@ export default function AutonoteAnimation() {
         setPhase(AnimationPhase.LOADING);
 
         mc.hide();
-        await mc.wait(2000);
+        await mc.wait(1000);
 
         setPhase(AnimationPhase.FINISHED_LOADING);
 

@@ -77,7 +77,7 @@ export default function GenerateStudyGuidesAnimation() {
         await mouse.wait(1000);
 
         // Study guide generation animation waiting
-        await mouse.wait(1000);
+        await mouse.wait(500);
 
         setMagicDone(true)
     }

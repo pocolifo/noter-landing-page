@@ -17,4 +17,18 @@
 .desktop {
     width: 800px;
     height: 450px;
+    margin: 1rem;
+}
+
+@media only screen and (max-width: 500px) {
+    .animationContainer {
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        width: 100%;
+    }
+
+    .desktop {
+        margin: 0rem;
+    }
 }

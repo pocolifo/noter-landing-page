@@ -7,18 +7,39 @@ import AutonoteSection from "../components/index/autonote/AutonoteSection.astro"
 import GenerateStudyGuidesSection from "../components/index/generatestudyguide/GenerateStudyGuidesSection.astro";
 import TakeNotesSection from "../components/index/takenotes/TakeNotesSection.astro";
 import Layout from "../layouts/Layout.astro";
-import PortabilitySection from "../components/index/portablility/PortabilitySection.astro";
 ---
 <Layout title="Home" navBarFixed={true}>
     <ScreenTextSection>
         <h1>Noter. It's your AI-powered notebook.</h1>
     </ScreenTextSection>
 
-    <TakeNotesSection />
-    <AutonoteSection />
-    <SummarizerSection />
-    <QuizSection />
-    <GenerateStudyGuidesSection />
-    <PortabilitySection />
-    <TypewriterSection />
+    <div class="sections">
+        <TakeNotesSection />
+        <AutonoteSection />
+        <SummarizerSection />
+        <QuizSection />
+        <GenerateStudyGuidesSection />
+        <TypewriterSection />
+    </div>
 </Layout>
+
+<style>
+    /* Alternate the text and animation sides */
+    :global(section:nth-child(even) .text) {
+        order: 2;
+    }
+
+    :global(section:nth-child(odd) .text) {
+        text-align: right;
+    }
+
+	@media only screen and (max-width: 1000px) {
+        :global(section:nth-child(even) .text) {
+            order: 1;
+        }
+
+        :global(section:nth-child(odd) .text) {
+            text-align: center;
+        }
+    }
+</style>

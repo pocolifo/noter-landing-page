@@ -45,7 +45,6 @@ const { id, title, price, unit, features, freeTrialIncluded } = Astro.props as P
         padding: 1rem;
         background: #ffffff;
         box-shadow: #00000044 0px 0px 20px;
-        max-width: 450px;
     }
 
     .price {
@@ -62,7 +61,10 @@ const { id, title, price, unit, features, freeTrialIncluded } = Astro.props as P
 
     .feature {
         font-size: 1.15em;
-        display: flex;
+
+        /* use grid instead of flex to fix inconsistent icon sizing on smaller devices */
+        display: grid;
+        grid-template-columns: 32px 1fr;
         gap: 0.25rem;
         align-items: center;
     }

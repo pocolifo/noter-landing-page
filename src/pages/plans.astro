@@ -1,6 +1,6 @@
 ---
-import ExpandableQA from "../components/subscribe/ExpandableQA";
-import Plan from "../components/subscribe/Plan.astro";
+import ExpandableQA from "../components/plans/ExpandableQA";
+import Plan from "../components/plans/Plan.astro";
 import CenteredLayout from "../layouts/CenteredLayout.astro";
 
 const FREE_FEATURES = [
@@ -63,7 +63,8 @@ const ANNUAL_FEATURES = FREE_FEATURES.map((entry) => [entry[0], true]);
     }
 
     .plans {
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 2rem;
         align-items: center;
         justify-content: center;

@@ -6,12 +6,10 @@ import Layout from "../layouts/Layout.astro";
 ---
 <style>
     .fullScreen {
-        min-height: 100vh;
         font-size: 2em;
 
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
         align-items: center;
         justify-content: center;
         gap: 1rem;
@@ -55,6 +53,17 @@ import Layout from "../layouts/Layout.astro";
     .padding {
         padding: 5rem;
     }
+
+    @media only screen and (max-width: 500px) {
+        .padding {
+            padding: 0;
+        }
+
+        .fullScreen {
+            display: block;
+            margin: 1rem;
+        }
+    }
 </style>
 <Layout title="Contact" navBarFixed={false}>
     <div class="fullScreen">
@@ -86,7 +95,7 @@ import Layout from "../layouts/Layout.astro";
             </div>
 
             <div class="field">
-                <label for="email">Your email</label>
+                <label for="email">Your email address</label>
                 <input id="email" type="email" required />
             </div>
 

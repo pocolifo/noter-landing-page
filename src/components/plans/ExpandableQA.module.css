@@ -6,7 +6,9 @@
 }
 
 .row {
-    display: flex;
+    /* use grid instead of flex to fix inconsistent icon sizing on smaller devices */
+    display: grid;
+    grid-template-columns: 1fr 32px;
     align-items: center;
     font-size: 2em;
     margin: 0 2rem 0 2rem;
@@ -39,5 +41,5 @@
 
 .answer.opened {
     transform: scale(1);
-    max-height: 1000px;
+    max-height: 500px;
 }

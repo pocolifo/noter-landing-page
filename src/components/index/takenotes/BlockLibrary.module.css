@@ -6,9 +6,9 @@
     border-radius: 1rem;
     position: absolute;
     width: 75%;
-    
+
+    top: 100%;
     left: 50%;
-    top: 50%;
     transform: scale(1) translate(-50%, -50%);
     transform-origin: center;
 
