@@ -1,0 +1,22 @@
+---
+import CenteredLayout from "./CenteredLayout.astro";
+
+interface Props {
+    title: string;
+}
+
+const { title } = Astro.props as Props;
+---
+
+<CenteredLayout title={title}>
+    <div>
+        <slot />
+    </div>
+</CenteredLayout>
+
+<style>
+    div {
+        font-family: 'Inter';
+        font-size: 1.25em;
+    }
+</style>
