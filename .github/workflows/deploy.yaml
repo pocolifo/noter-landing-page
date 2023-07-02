@@ -12,11 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - name: Configure SSH
-        run: |
-          eval `ssh-agent -s`
-          ssh-add - <<< '${{ secrets.GETNOTER_COM_SSH_PRIVATE_KEY }}'
-      
       - name: Checkout
         uses: actions/checkout@v2
         with:
@@ -36,6 +31,8 @@ jobs:
 
       - name: Deploy static site to server
         run: |
+          eval `ssh-agent -s`
+          ssh-add - <<< '${{ secrets.GETNOTER_COM_SSH_PRIVATE_KEY }}'
           ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_ADDRESS 'cd html && rm -rf *'
           sftp -o StrictHostKeyChecking=no $SSH_USER@$SSH_ADDRESS:/home/$SSH_USER/html <<< "put dist/**"
         env:
