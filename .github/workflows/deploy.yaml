@@ -14,8 +14,8 @@ jobs:
     steps:
       - name: Configure SSH
         run: |
-          eval `ssh-agent -s`
-          ssh-add - <<< '${{ secrets.GETNOTER_COM_SSH_PRIVATE_KEY }}'
+          eval $(ssh-agent -s)
+          echo '${{ secrets.GETNOTER_COM_SSH_PRIVATE_KEY }}' | tr -d '\r' | ssh-add -
       
       - name: Checkout
         uses: actions/checkout@v2
