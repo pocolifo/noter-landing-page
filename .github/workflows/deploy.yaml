@@ -14,8 +14,10 @@ jobs:
     steps:
       - name: Configure SSH
         run: |
-          eval $(ssh-agent -s)
-          echo '${{ secrets.GETNOTER_COM_SSH_PRIVATE_KEY }}' | tr -d '\r' | ssh-add -
+          mkdir -p ~/.ssh
+          echo "${{ secrets.GETNOTER_COM_SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H $SSH_ADDRESS >> ~/.ssh/known_hosts
       
       - name: Checkout
         uses: actions/checkout@v2
@@ -36,5 +38,5 @@ jobs:
 
       - name: Deploy static site to server
         run: |
-          ssh $SSH_USER@$SSH_ADDRESS 'cd html && rm -rf *'
-          sftp $SSH_USER@$SSH_ADDRESS:/home/$SSH_USER/html <<< "put dist/**"
+          ssh -i ~/.ssh/id_rsa $SSH_USER@$SSH_ADDRESS 'cd html && rm -rf *'
+          sftp -i ~/.ssh/id_rsa $SSH_USER@$SSH_ADDRESS:/home/$SSH_USER/html <<< "put dist/**"
