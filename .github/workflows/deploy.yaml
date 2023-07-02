@@ -34,7 +34,7 @@ jobs:
           eval `ssh-agent -s`
           ssh-add - <<< '${{ secrets.GETNOTER_COM_SSH_PRIVATE_KEY }}'
           ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_ADDRESS 'cd html && rm -rf *'
-          sftp -o StrictHostKeyChecking=no $SSH_USER@$SSH_ADDRESS:/home/$SSH_USER/html <<< "put dist/**"
+          scp -r -o StrictHostKeyChecking=no dist/ $SSH_USER@$SSH_ADDRESS:/home/$SSH_USER/html
         env:
           SSH_USER: ${{ vars.SSH_USER }}
           SSH_ADDRESS: ${{ vars.SSH_ADDRESS }}
