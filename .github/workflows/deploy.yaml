@@ -1,0 +1,38 @@
+name: Deployment
+
+concurrency: production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Configure SSH
+        run: |
+          eval `ssh-agent -s`
+          ssh-add - <<< '${{ secrets.GETNOTER_COM_SSH_PRIVATE_KEY }}'
+      
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: pocolifo/noter-landing-page
+          ssh-key: ${{ secrets.GETNOTER_COM_SSH_PRIVATE_KEY }}
+      
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'latest'
+      
+      - name: Install dependencies
+        run: npm i
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy static site to server
+        run: ./deploy.sh
