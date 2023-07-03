@@ -6,7 +6,12 @@ import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [compress(), solidJs()],
+  integrations: [
+    compress({
+      svg: false
+    }),
+    solidJs()
+  ],
   output: "server",
   adapter: cloudflare()
 });
