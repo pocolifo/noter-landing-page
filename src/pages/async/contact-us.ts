@@ -3,7 +3,7 @@ import type { APIRoute } from "astro";
 import contactUsMetadata from "../../components/contact-us/contact-us-metadata.json"
 
 
-const SAFE_CHARACTERS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()-=_+`~;:,./<>?\\|\'" \t\n';
+const SAFE_CHARACTERS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()-=_+`~;:,./<>?\\|\'" \t\n\r';
 const DISCORD_WEBHOOK = import.meta.env.VITE_DISCORD_CONTACT_WEBHOOK_URL;
 
 interface Env {
@@ -132,7 +132,9 @@ function ensureNotFile(formData: FormData, key: string, defaultString: string): 
 
 function isStringSafe(s: string): boolean {
     for (let c of s) {
-        if (!SAFE_CHARACTERS.includes(c)) return false;
+        if (!SAFE_CHARACTERS.includes(c)) {
+            return false;
+        }
     }
 
     return true;
