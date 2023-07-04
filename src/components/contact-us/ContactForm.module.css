@@ -1,0 +1,58 @@
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+form label {
+    font-weight: bold;
+}
+
+form label::after {
+    content: " *";
+    color: #ff0000;
+}
+
+form textarea {
+    resize: none;
+    height: 256px;
+}
+
+form select, textarea, input {
+    border: #000000 1px solid;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.75em;
+    background: #FFFFFF;
+    font-family: 'Inter';
+}
+
+form input[type="submit"]:enabled:hover {
+    cursor: pointer;
+    background: #EEEEEE;
+}
+
+.formStatus {
+    border: #ef4444 2px solid;
+    background: #f87171;
+    color: #FFFFFF;
+    font-size: 0.75em;
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+.formStatus::before {
+    content: 'Error: ';
+    font-weight: bold;
+}
+
+.formStatus.success {
+    border-color: #10b981;
+    background: #34d399;
+    color: #000000;
+}
+
+.formStatus.success::before {
+    content: 'Success: ';
+}

@@ -1,0 +1,13 @@
+{
+    "reasons": [
+        "Compliment",
+        "Suggestion",
+        "Feedback",
+        "Complaint",
+        "Legal",
+        "Question",
+        "Bug Report",
+        "Other"
+    ],
+    "messageMaxLength": 1500
+}

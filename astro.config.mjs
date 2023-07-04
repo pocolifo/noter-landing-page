@@ -9,5 +9,8 @@ export default defineConfig({
     solidJs()
   ],
   output: "server",
-  adapter: cloudflare()
+  adapter: cloudflare({ mode: 'directory' }),
+  vite: {
+    envPrefix: 'VITE_'
+  }
 });

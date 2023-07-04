@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview --host",
+    "preview": "wrangler pages dev dist",
     "astro": "astro"
   },
   "dependencies": {
@@ -14,5 +14,10 @@
     "@astrojs/solid-js": "^2.2.0",
     "astro": "^2.7.2",
     "solid-js": "^1.7.6"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20230518.0",
+    "typescript": "^5.1.6",
+    "wrangler": "^0.0.0-3f61892d"
   }
 }

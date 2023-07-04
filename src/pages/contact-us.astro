@@ -1,8 +1,9 @@
 ---
-import Link from "../components/Link.astro";
-import type AnimationSide from "../components/index/AnimationSide.astro";
-import ScreenTextSection from "../components/index/ScreenTextSection.astro";
+export const prerender = true;
+
 import Layout from "../layouts/Layout.astro";
+
+import ContactForm from "../components/contact-us/ContactForm";
 ---
 <style>
     .fullScreen {
@@ -15,96 +16,33 @@ import Layout from "../layouts/Layout.astro";
         gap: 1rem;
     }
 
-    label {
-        font-weight: bold;
-    }
-
-    label::after {
-        content: " *";
-        color: #ff0000;
-    }
-
-    .field {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        margin-bottom: 1rem;
-    }
-
-    textarea {
-        resize: none;
-        height: 256px;
-    }
-
-    select, textarea, input {
-        border: #000000 1px solid;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        font-size: 0.75em;
-        background: #FFFFFF;
-        font-family: 'Inter';
-    }
-
-    input[type="submit"]:hover {
-        cursor: pointer;
-        background: #EEEEEE;
-    }
-
-    .padding {
+    .side {
         padding: 5rem;
     }
 
     @media only screen and (max-width: 500px) {
-        .padding {
+        .side {
             padding: 0;
         }
 
         .fullScreen {
             display: block;
             margin: 1rem;
+            font-size: 1.75em;
         }
     }
 </style>
 <Layout title="Contact" navBarFixed={false}>
     <div class="fullScreen">
-        <div class="padding">
+        <div class="side">
             <h1>Contact us</h1>
             <p>We graciously accept compliments, suggestions, and feedback on our service to make it better for you! Please fill out and submit the form, and we'll get back to you as soon as possible. We look forward to hearing from you!</p>
 
             <p>Please note that we may limit submissions to prevent spam.</p>
         </div>
 
-        <form class="padding">
-            <div class="field">
-                <label for="reason-for-contact">Reason for contact</label>
-
-                <select id="reason-for-contact" required>
-                    <option>Compliment</option>
-                    <option>Suggestion</option>
-                    <option>Feedback</option>
-                    <option>Complaint</option>
-                    <option>Legal/Law</option>
-                    <option>Question</option>
-                    <option>Other</option>
-                </select>
-            </div>
-
-            <div class="field">
-                <label for="subject">Subject</label>
-                <input id="subject" type="text" required />
-            </div>
-
-            <div class="field">
-                <label for="email">Your email address</label>
-                <input id="email" type="email" required />
-            </div>
-
-            <div class="field">
-                <label for="text">Your words</label>
-                <textarea id="text" spellcheck="true" autocapitalize="true" required></textarea>
-            </div>
-
-            <input type="submit" value="Send" />
-        </form>
+        <div class="side">
+            <ContactForm client:load />
+        </div>
     </div>
 </Layout>
