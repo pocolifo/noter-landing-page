@@ -81,7 +81,7 @@ async function sendDiscordMessage(submission: ContactFormSubmission) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                'content': `From: ${submission.email}\nReason for contact: ${submission.reasonForContact}\nSubject: ${submission.subject}\n\n${submission.text}`
+                'content': `\`\`\`From: ${submission.email}\nReason for contact: ${submission.reasonForContact}\nSubject: ${submission.subject}\n\n${submission.text}\`\`\``
             })
         }
     );
