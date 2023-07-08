@@ -5,8 +5,9 @@
 
 .title {
     font-size: 2em;
-    margin: 1rem;
+    font-weight: bold;
     text-align: center;
+    margin: 1rem;
 }
 
 .contentImage {

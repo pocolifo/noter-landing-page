@@ -2,7 +2,7 @@ import { Accessor, Setter, Show, Signal, createEffect, createSignal, onMount } f
 import styles from './Mouse.module.css';
 
 const CLICK_DURATION = 500;
-const MOVE_DURATION = 1000;
+const MOVE_DURATION = 750;
 
 export class MouseController {
     private mouse: HTMLDivElement;

@@ -52,7 +52,7 @@ export default function AutonoteAnimation() {
                 clearInterval(wordUpdateInterval);
                 clearInterval(timeUpdateInterval);
             }
-        }, 100);
+        }, 70);
     }
 
     function startTimer() {
@@ -82,7 +82,7 @@ export default function AutonoteAnimation() {
         startTranscript();
         startTimer();
 
-        await mc.wait(2500);
+        await mc.wait(2000);
         mc.show();
         await mc.move(startRecordingButton);
         await mc.click(startRecordingButton);
@@ -116,7 +116,7 @@ export default function AutonoteAnimation() {
 
     return (
         <AnimationContainer type={AnimationContainerType.PHONE} animateFunction={runAnimation}>
-            <h1>1.2 Cells</h1>
+            <h2>1.2 Cells</h2>
             
             <div classList={{
                 [styles.row]: true,

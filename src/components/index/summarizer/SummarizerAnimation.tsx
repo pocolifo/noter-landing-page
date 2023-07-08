@@ -42,7 +42,7 @@ export default function SummarizerAnimation() {
     return (
         <AnimationContainer noRestart={true} type={AnimationContainerType.DESKTOP} animateFunction={runAnimation}>
             <div class={styles.bar}>
-                <h1>Summary</h1>
+                <h2>Summary</h2>
 
                 <div class={styles.radio}>
                     <span ref={sentences} classList={{

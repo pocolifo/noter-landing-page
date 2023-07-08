@@ -61,7 +61,7 @@ export default function QuizAnimation() {
             await mouse.move(correctAnswerElement);
             await mouse.click(correctAnswerElement);
             setShowAnswers(true);
-            await mouse.wait(1000);
+            await mouse.wait(500);
             setShowAnswers(false);
 
             scrollContainer.scrollTo({
@@ -88,7 +88,7 @@ export default function QuizAnimation() {
                     <For each={ QUESTIONS }>
                         {(questions, questionI) => (
                             <div class={styles.page}>
-                                <h2>{questionI()+1}. {questions[0]}</h2>
+                                <span class={quizStyles.questionText}>{questionI()+1}. {questions[0]}</span>
 
                                 <div>
                                     <For each={ questions.slice(1) }>
@@ -106,7 +106,7 @@ export default function QuizAnimation() {
                     
                     {/* +1 final page */}
                     <div class={styles.page}>
-                        <h1>Score</h1>
+                        <h2>Score</h2>
 
                         <div class={quizStyles.scorePageBox}>
                             <svg width={32} height={32} viewBox="0 0 32 32">
@@ -115,7 +115,7 @@ export default function QuizAnimation() {
 
                             <div class={quizStyles.textContainer}>
                                 <div>
-                                    <h1>You aced that!</h1>
+                                    <h2>You aced that!</h2>
                                     <p>Excellent! That's every single question answered correctly. Hungry for more? Generate another quiz!</p>
                                 </div>
                             </div>

@@ -3,13 +3,23 @@ import CenteredLayout from "./CenteredLayout.astro";
 
 interface Props {
     title: string;
+    lastUpdated: Date;
 }
 
-const { title } = Astro.props as Props;
+const { title, lastUpdated } = Astro.props as Props;
 ---
 
 <CenteredLayout title={title}>
     <div>
+        <h1>Noter {title}</h1>
+        <p>
+            Last updated {lastUpdated.toLocaleDateString('en', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric'
+            })}
+        </p>
+        <hr />
         <slot />
     </div>
 </CenteredLayout>

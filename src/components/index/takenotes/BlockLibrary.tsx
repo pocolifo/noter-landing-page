@@ -8,7 +8,7 @@ export default function BlockLibrary(props: any) {
     return (
         <div class={`${styles.blocksContainer} ${styles.hidden}`} ref={props.ref}>
             <div style={{ padding: "1rem" }}>
-                <h1>Add block</h1>
+                <span>Add block</span>
 
                 <div class={styles.grid}>
                     { c() }

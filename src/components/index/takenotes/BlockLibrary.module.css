@@ -20,8 +20,10 @@
     opacity: 0;
 }
 
-.blocksContainer h1 {
+.blocksContainer span {
     margin: 0 0 1rem 0;
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
 .blocksContainer .grid {

@@ -88,7 +88,7 @@ export default function GenerateStudyGuidesAnimation() {
                 <div class={styles.pages}>
                     {/* Create page */}
                     <div class={styles.page}>
-                        <h1>Create...</h1>
+                        <h2>Create...</h2>
 
                         <div class={styles.creationOptionsRow}>
                             <CreateEntryButton ref={studyGuideButton} name="Study Guide" color="#F472B6" icon={ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g id="feDocument0" fill="none" fill-rule="evenodd" stroke="none" stroke-width="1"><g id="feDocument1" fill="currentColor" fill-rule="nonzero"><path id="feDocument2" d="M15 4H6v16h12V7h-3V4ZM6 2h10l4 4v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm2 9h8v2H8v-2Zm0 4h8v2H8v-2Z"/></g></g></svg> } />
@@ -99,7 +99,7 @@ export default function GenerateStudyGuidesAnimation() {
 
                     {/* Options page */}
                     <div class={styles.page}>
-                        <h1>Create Study Guide</h1>
+                        <h2>Create Study Guide</h2>
 
                         <div style={{ 'margin': '1rem 0 1rem 0' }}>
                             <small>NAME</small>
@@ -122,15 +122,15 @@ export default function GenerateStudyGuidesAnimation() {
                     {/* Generated page */}
                     <div class={styles.page}>
                         <div>
-                            <h1>1.1-1.3 Study Guide</h1>
+                            <h2>1.1-1.3 Study Guide</h2>
 
                             <Magic doneState={ magicDone }>
-                                <h2>Summary</h2>
+                                <h3>Summary</h3>
                                 <p>Biology studies living organisms and their interactions. Life is classified into Bacteria, Archaea, and Eukarya domains. Cells are the basic units of life. Genetics focuses on heredity, DNA, and inheritance.</p>
                             </Magic>
 
                             <Magic doneState={ magicDone }>
-                                <h2>Vocbaulary to know</h2>
+                                <h3>Vocbaulary to know</h3>
                                 <ul>
                                     <li><strong>Prokaryote:</strong> A single-celled organism that lacks a nucleus and membrane-bound organelles.</li>
                                     <li><strong>Eukaryote:</strong> An organism with cells that have a nucleus and membrane-bound organelles.</li>

@@ -86,7 +86,7 @@ export default function NoteTakingAnimation() {
     return (
         <AnimationContainer type={AnimationContainerType.PHONE} animateFunction={runAnimation}>
             <div class={styles.container}>
-                <h1 class={styles.title}>1.1 Biology Review</h1>
+                <p class={styles.title}>1.1 Biology Review</p>
 
                 <img src={NoteTakingImage} ref={image} class={`${styles.hideImage} ${styles.contentImage}`} alt="Image in note document" />
                 <div ref={textBlock} class={`${styles.textBlock} ${styles.hideTextBlock}`}>This is your new text block</div>

@@ -30,12 +30,12 @@ export const post: APIRoute = async ({ request, clientAddress }) => {
     const requestIsValid = await verifyTurnstileChallenge(
         formData.get('cf-turnstile-response') as string | null,  // TODO: make sure this is actually string | null and not another input type
         ip,
-        import.meta.env.VITE_TURNSTILE_SITE_SECRET || '1x0000000000000000000000000000000AA'
+        import.meta.env.VITE_TURNSTILE_SITE_SECRET || /* the following is a test key for Turnstile*/ '1x0000000000000000000000000000000AA'
     );
 
     if (!requestIsValid) {
         // Bad request. Did not pass Turnstile.
-        return new Response('You must complete the captcha to submit the form.', { status: 400 });
+        return new Response('The captcha has expired. Please refresh and retry.', { status: 400 });
     }
 
     try {
@@ -53,8 +53,9 @@ export const post: APIRoute = async ({ request, clientAddress }) => {
         }
     
         try {
-            await sendDiscordMessage(submission);
-        } catch {
+            await sendDiscordMessage(submission, ip, runtime.cf?.botManagement.score);
+        } catch (e) {
+            console.error(e)
             return new Response("Sorry, we couldn't receive your message. Please try again later.", { status: 500 });
         }
     
@@ -72,7 +73,21 @@ export const post: APIRoute = async ({ request, clientAddress }) => {
     }
 }
 
-async function sendDiscordMessage(submission: ContactFormSubmission) {
+function getMeaningOfBotScore(botScore: number | undefined): string {
+    if (botScore === undefined) {
+        return "unknown";
+    } else if (botScore > 30) {
+        return "likely human";
+    } else if (botScore > 2) {
+        return "likely automated";
+    } else if (botScore == 1) {
+        return "certainly automated";
+    } else {
+        return "not computed";
+    }
+}
+
+async function sendDiscordMessage(submission: ContactFormSubmission, ipAddress: string, botScore: number | undefined) {
     await fetch(
         DISCORD_WEBHOOK,
         {
@@ -81,7 +96,16 @@ async function sendDiscordMessage(submission: ContactFormSubmission) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                'content': `\`\`\`From: ${submission.email}\nReason for contact: ${submission.reasonForContact}\nSubject: ${submission.subject}\n\n${submission.text}\`\`\``
+                'content':
+`\`\`\`
+IP Address: ${ipAddress}
+Bot Score: ${botScore} [${getMeaningOfBotScore(botScore)}]
+From: ${submission.email}
+Reason for contact: ${submission.reasonForContact}
+Subject: ${submission.subject}
+
+${submission.text}
+\`\`\``
             })
         }
     );
@@ -170,11 +194,5 @@ async function verifyTurnstileChallenge(token: string | null, ip: string, turnst
 
     const outcome = await result.json() as TurnstileResponse;
 
-    if (outcome.success) {
-        return true;
-    }
-
-    console.log(outcome);
-
-    return false;
+    return outcome.success;
 }

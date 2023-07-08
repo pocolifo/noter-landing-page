@@ -1,22 +1,19 @@
 ---
 export const prerender = true;
 
+import Link from "../../components/Link.astro";
 import LegalLayout from "../../layouts/LegalLayout.astro";
 ---
 
-<LegalLayout title="Privacy Policy">
-    <h1>PRIVACY POLICY</h1>
-
-<p>Last updated June 29, 2023</p>
-
-<p>This privacy notice for __________ ("we," "us," or "our") describes how and why we might collect, store, use, and/or share ("process") your information when you use our services ("Services"), such as when you:</p>
+<LegalLayout title="Privacy Policy" lastUpdated={new Date(2023, 7-1, 6)}>
+<p>This privacy notice for Noter ("we," "us," or "our") describes how and why we might collect, store, use, and/or share ("process") your information when you use our services ("Services"), such as when you:</p>
 
 <ul>
 <li>Visit our website at getnoter.com, or any website of ours that links to this privacy notice</li>
 <li>Engage with us in other related ways, including any sales, marketing, or events</li>
 </ul>
 
-<p>Questions or concerns? Reading this privacy notice will help you understand your privacy rights and choices. If you do not agree with our policies and practices, please do not use our Services. If you still have any questions or concerns, please contact us at legal@getnoter.com.</p>
+<p>Questions or concerns? Reading this privacy notice will help you understand your privacy rights and choices. If you do not agree with our policies and practices, please do not use our Services. If you still have any questions or concerns, please contact us at <Link href="/contact-us">https://getnoter.com/contact-us</Link>.</p>
 
 <h2>SUMMARY OF KEY POINTS</h2>
 
@@ -36,7 +33,7 @@ import LegalLayout from "../../layouts/LegalLayout.astro";
 
 <p>What are your rights? Depending on where you are located geographically, the applicable privacy law may mean you have certain rights regarding your personal information.</p>
 
-<p>How do you exercise your rights? The easiest way to exercise your rights is by visiting legal@getnoter.com, or by contacting us. We will consider and act upon any request in accordance with applicable data protection laws.</p>
+<p>How do you exercise your rights? The easiest way to exercise your rights is by visiting <Link href="/contact-us">https://getnoter.com/contact-us</Link> to contact us. We will consider and act upon any request in accordance with applicable data protection laws.</p>
 
 <p>Want to learn more about what we do with any information we collect? Review the privacy notice in full.</p>
 
@@ -182,7 +179,7 @@ import LegalLayout from "../../layouts/LegalLayout.astro";
 
 <p>Cookies and similar technologies: Most Web browsers are set to accept cookies by default. If you prefer, you can usually choose to set your browser to remove cookies and to reject cookies. If you choose to remove cookies or reject cookies, this could affect certain features or services of our Services. You may also opt out of interest-based advertising by advertisers on our Services.</p>
 
-<p>If you have questions or comments about your privacy rights, you may email us at legal@getnoter.com.</p>
+<p>If you have questions or comments about your privacy rights, you may contact us at <Link href="/contact-us">https://getnoter.com/contact-us</Link>.</p>
 
 <h2>9. CONTROLS FOR DO-NOT-TRACK FEATURES</h2>
 
@@ -241,10 +238,10 @@ import LegalLayout from "../../layouts/LegalLayout.astro";
 
 <h2>13. HOW CAN YOU CONTACT US ABOUT THIS NOTICE?</h2>
 
-<p>If you have questions or comments about this notice, you may email us at legal@getnoter.com or contact us by post at: email us at legal@getnoter.com.</p>
+<p>If you have questions or comments about this notice, you may contact us at <Link href="/contact-us">https://getnoter.com/contact-us</Link>.</p>
 
 <h2>14. HOW CAN YOU REVIEW, UPDATE, OR DELETE THE DATA WE COLLECT FROM YOU?</h2>
 
-<p>You have the right to request access to the personal information we collect from you, change that information, or delete it. To request to review, update, or delete your personal information, please email us at legal@getnoter.com.</p>
+<p>You have the right to request access to the personal information we collect from you, change that information, or delete it. To request to review, update, or delete your personal information, please contact us at <Link href="/contact-us">https://getnoter.com/contact-us</Link>.</p>
 
 </LegalLayout>
