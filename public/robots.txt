@@ -1,6 +1,4 @@
 User-agent: *
-Disallow: /404/
-Disallow: /5xx/
 Disallow: /async/contact-us/
 
 Sitemap: https://getnoter.com/sitemap-index.xml
