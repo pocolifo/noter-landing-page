@@ -16,5 +16,6 @@
 .image {
     position: absolute;
     transform: translateY(-25%);
-    width: 350px;
+    width: 75vw;
+    max-width: 250px;
 }

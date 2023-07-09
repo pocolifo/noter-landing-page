@@ -33,14 +33,13 @@ export default function NoteTakingAnimation() {
         library.classList.add(blockLibraryStyles.hidden);
         textBlock.classList.add(styles.hideTextBlock);
         textBlock.innerHTML = "This is your new text block";
-        controller.goTo(textBlockButton);
         controller.setAttachedImage(NoteTakingImage);
+        controller.goTo(addBlock);
         await controller.wait(500);
         controller.show();
 
-        await controller.move(addBlock);
-        await controller.wait(500);
-        
+        await controller.wait(1000);
+
         controller.setAttachedImage(undefined);
         image.classList.remove(styles.hideImage);
 
