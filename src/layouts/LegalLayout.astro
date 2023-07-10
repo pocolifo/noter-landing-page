@@ -9,7 +9,7 @@ interface Props {
 const { title, lastUpdated } = Astro.props as Props;
 ---
 
-<CenteredLayout title={title}>
+<CenteredLayout title={title} description={`Noter's ${title}.`}>
     <div>
         <h1>Noter {title}</h1>
         <p>

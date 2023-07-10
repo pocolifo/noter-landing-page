@@ -1,4 +1,7 @@
 User-agent: *
-Disallow: /async/contact-us/
+Disallow: /404/
+Disallow: /5xx/
+Disallow: /async/contact-us
+Disallow: /cdn-cgi/*
 
 Sitemap: https://getnoter.com/sitemap-index.xml

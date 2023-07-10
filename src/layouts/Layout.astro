@@ -5,16 +5,17 @@ import DocumentHead from './DocumentMetadata.astro';
 
 export interface Props {
 	title: string;
+	description: string;
 	navBarFixed: boolean;
 }
 
-const { title, navBarFixed } = Astro.props;
+const { title, description, navBarFixed } = Astro.props;
 ---
 
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<DocumentHead title={title} />
+		<DocumentHead title={title} description={description} />
 	</head>
 	
 	<body>

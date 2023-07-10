@@ -1,0 +1,27 @@
+.adjective {
+    border-right: #000000 2px solid;
+    animation: blink 1s ease infinite;
+    font-weight: bold;
+}
+
+@keyframes blink {
+    0% {
+        border-right-color: transparent;
+    }
+
+    49% {
+        border-right-color: transparent;
+    }
+
+    50% {
+        border-right-color: #000000;
+    }
+
+    99% {
+        border-right-color: #000000;
+    }
+
+    100% {
+        border-right-color: transparent;
+    }
+}

@@ -10,6 +10,9 @@ const EXCLUDE_FROM_SITEMAP = ['/404', '/5xx', '/async/'];
 export default defineConfig({
   site: 'https://getnoter.com',
   trailingSlash: 'ignore',
+  build: {
+    redirects: false,
+  },
   integrations: [
     solidJs(),
     sitemap({

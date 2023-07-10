@@ -1,78 +1,14 @@
 ---
 import Link from "../../Link.astro";
 import ScreenTextSection from "../ScreenTextSection.astro";
-import TextAndContentSection from "../TextAndContentSection.astro";
 import TextSide from "../TextSide.astro";
+import TypewriterAnimation from "./TypewriterAnimation";
 ---
-<style>
-    .adjective {
-        border-right: #000000 2px solid;
-        animation: blink 1s ease infinite;
-        font-weight: bold;
-    }
-
-    @keyframes blink {
-        0% {
-            border-right-color: transparent;
-        }
-
-        49% {
-            border-right-color: transparent;
-        }
-
-        50% {
-            border-right-color: #000000;
-        }
-
-        99% {
-            border-right-color: #000000;
-        }
-
-        100% {
-            border-right-color: transparent;
-        }
-    }
-</style>
 
 <ScreenTextSection>
     <TextSide textAlignRight={false}>
-        <h2>
-            Noter helps you <br />
-            <span class="adjective"></span>.
-        </h2>
+        <TypewriterAnimation client:visible />
 
         <Link href="/plans">Get Noter</Link>
     </TextSide>
 </ScreenTextSection>
-
-<script>
-    const adjective = document.querySelector('.adjective');
-    const adjectives = [
-        'get better grades',
-        'learn better',
-        'study faster',
-        'stay organized',
-        'learn easier',
-        'study effortlessly',
-        'practice easier',
-        'pay attention',
-        'stay focused',
-        'achieve your goals'
-    ];
-
-    let adjectiveI = 0;
-    let charI = 0;
-
-    if (adjective !== null) {
-        setInterval(() => {
-            adjective.textContent = adjectives[adjectiveI].substring(0, charI);
-            charI = Math.min(charI + 1, adjectives[adjectiveI].length);
-        }, 100);
-    
-        setInterval(() => {
-            adjectiveI = (adjectiveI + 1) % adjectives.length;
-            charI = 0;
-        }, 3500);
-    }
-
-</script>

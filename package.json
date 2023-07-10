@@ -6,21 +6,21 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "wrangler pages dev dist",
+    "preview": "wrangler pages dev dist --kv KV",
     "astro": "astro"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^6.5.1",
-    "@astrojs/sitemap": "^1.3.3",
     "@astrojs/solid-js": "^2.2.0",
     "astro": "^2.7.2",
     "solid-js": "^1.7.6"
   },
   "devDependencies": {
+    "@astrojs/sitemap": "^1.3.3",
     "@cloudflare/workers-types": "^4.20230518.0",
     "astro-html-minifier": "^0.5.0",
-    "typescript": "^5.1.6",
     "schema-dts": "^1.1.2",
+    "typescript": "^5.1.6",
     "wrangler": "^0.0.0-3f61892d"
   }
 }
