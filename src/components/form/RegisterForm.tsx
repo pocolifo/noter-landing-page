@@ -1,12 +1,9 @@
-import { For, Show, createSignal } from "solid-js";
-import TextField from "./TextField";
+import { Show, createSignal } from "solid-js";
 import Turnstile from "./Turnstile";
-import contactMetadata from "./contact-us-metadata.json";
 
-import styles from './ContactForm.module.css';
+import styles from './Form.module.css';
 
-
-export default function ContactForm() {
+export default function RegisterForm() {
     const [ isFormSubmitting, setFormSubmitting ] = createSignal<boolean>(false);
     const [ formStatus, setFormStatus ] = createSignal<string | null>(null);
     const [ submissionSuccess, setSubmissionSuccess ] = createSignal<boolean>(false);
@@ -29,36 +26,25 @@ export default function ContactForm() {
     }
 
     return (
-        <form method="post" enctype="multipart/form-data" action="/async/contact-us" onSubmit={ async e => handleFormSubmission(e) }>
-            <div class={styles.field}>
-                <label for="reason-for-contact">Reason for contact</label>
-
-                <select id="reason-for-contact" name="reason-for-contact" required>
-                    <For each={contactMetadata.reasons}>
-                        {((reason, _) => <option>{reason}</option>)}
-                    </For>
-                </select>
-            </div>
-
-            <div class={styles.field}>
-                <label for="subject">Subject</label>
-                <input id="subject" type="text" name="subject" required />
-            </div>
-
+        <form method="post" enctype="multipart/form-data" action="/async/register" onSubmit={ async e => handleFormSubmission(e) }>
             <div class={styles.field}>
                 <label for="email">Your email address</label>
                 <input id="email" type="email" name="email" required />
             </div>
             
             <div class={styles.field}>
-                <label for="text">Your words</label>
-                <TextField maxCharacters={contactMetadata.messageMaxLength} />
+                <label for="password">Your password</label>
+                <input id="password" type="password" name="password" required />
             </div>
 
-            {/* Cloudflare Turnstile to protect against bots */}
+            <div class={styles.field}>
+                <label for="confirm-password">Type your password again</label>
+                <input id="confirm-password" type="password" name="confirm-password" required />
+            </div>
+
             <Turnstile />
 
-            <input type="submit" value="Send" disabled={isFormSubmitting()} />
+            <input type="submit" value="Create account" disabled={isFormSubmitting()} />
 
             <Show when={formStatus() !== null}>
                 <p classList={{

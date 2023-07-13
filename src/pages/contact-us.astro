@@ -1,49 +1,18 @@
 ---
-export const prerender = true;
-
 import Layout from "../layouts/Layout.astro";
-import ContactForm from "../components/contact-us/ContactForm";
+import ContactForm from "../components/form/ContactForm";
+import FullScreenLayout from "../layouts/FullScreenLayout.astro";
 ---
-<style>
-    .fullScreen {
-        font-size: 2em;
+<FullScreenLayout title="Contact us"
+        description="Contact Noter by filling out our contact form. We accept compliments, suggestions, feedback, and other communication about our service.">
+    <div class="side">
+        <h1>Contact us</h1>
+        <p>We graciously accept compliments, suggestions, and feedback on our service to make it better for you! Please fill out and submit the form, and we'll get back to you as soon as possible. We look forward to hearing from you!</p>
 
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
-        align-items: center;
-        justify-content: center;
-        gap: 1rem;
-    }
+        <p>Please note that we may limit submissions to prevent spam.</p>
+    </div>
 
-    .side {
-        padding: 5rem;
-    }
-
-    @media only screen and (max-width: 500px) {
-        .side {
-            padding: 0;
-        }
-
-        .fullScreen {
-            display: block;
-            margin: 1rem;
-            font-size: 1.75em;
-        }
-    }
-</style>
-<Layout title="Contact us"
-        description="Contact Noter by filling out our contact form. We accept compliments, suggestions, feedback, and other communication about our service."
-        navBarFixed={false}>
-    <div class="fullScreen">
-        <div class="side">
-            <h1>Contact us</h1>
-            <p>We graciously accept compliments, suggestions, and feedback on our service to make it better for you! Please fill out and submit the form, and we'll get back to you as soon as possible. We look forward to hearing from you!</p>
-
-            <p>Please note that we may limit submissions to prevent spam.</p>
-        </div>
-
-        <div class="side">
-            <ContactForm client:load />
-        </div>
+    <div class="side">
+        <ContactForm client:load />
     </div>
 </Layout>

@@ -8,11 +8,8 @@ const EXCLUDE_FROM_SITEMAP = ['/404', '/5xx', '/async/'];
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://getnoter.com',
-  trailingSlash: 'ignore',
-  build: {
-    redirects: false,
-  },
+  site: 'https://www.getnoter.com',
+  trailingSlash: 'never',
   integrations: [
     solidJs(),
     sitemap({
@@ -41,12 +38,9 @@ export default defineConfig({
     })],
   output: "server",
   adapter: cloudflare({
-    mode: 'directory'
+    mode: 'advanced'
   }),
   vite: {
     envPrefix: 'VITE_',
-    build: {
-      minify: true
-    }
   }
 });

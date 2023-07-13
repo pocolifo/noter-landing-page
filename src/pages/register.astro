@@ -1,0 +1,178 @@
+---
+import type Stripe from "stripe";
+import RegisterForm from "../components/form/RegisterForm";
+import FullScreenLayout from "../layouts/FullScreenLayout.astro";
+import { API_URL, STRIPE } from "./async/utils";
+import ButtonLink from "../components/ButtonLink.astro";
+
+const REGISTRATION_STEPS = ['Create account', 'Verify email', 'Select plan', 'Done!'];
+
+const verificationId = Astro.url.searchParams.get("vid");    // when an email is sent and the user clicks on the verification link
+const selectedPlanId = Astro.url.searchParams.get("p");      // the stripe price id of the price to be bought
+const stripeSessionId = Astro.url.searchParams.get("ssid");  // this is given by stripe when redirected back to /register on payment success
+
+let accountVerified: boolean | null = null;
+let newCheckoutSessionUrl: string | null = null;
+let returnedStripeSession: Stripe.Checkout.Session | null = null;
+let stepIndex = 0; // index of REGISTRATION_STEPS that the user is on
+
+if (verificationId !== null) {
+    // verify the email by calling the backend by relaying the cookie
+    accountVerified = await fetch(
+        `${API_URL}/verify?${new URLSearchParams({
+            id: verificationId,
+        })}`,
+        {
+            method: "POST",
+            headers: {
+                Cookie: `authenticate=${Astro.cookies.get("authenticate").value}`,
+            },
+    })
+    .then(response => response.status === 204)
+    .catch(() => false);
+
+    stepIndex = 1;  // set index to "Verify email"
+} else if (selectedPlanId !== null) {
+    // get url of a new stripe checkout session
+    // fetch user stripe_id
+    newCheckoutSessionUrl = await fetch(
+        API_URL,
+        {
+            headers: {
+                Cookie: `authenticate=${Astro.cookies.get("authenticate").value}`,
+            },
+        }
+    )
+    .then(response => response.json())
+    .then(data => {
+        // when a plan to be bought is provided, create a stripe checkout session
+        return STRIPE.checkout.sessions.create({
+            allow_promotion_codes: true,
+            automatic_tax: { enabled: true },
+            currency: 'usd',
+            mode: 'subscription',
+            customer: data['stripe_id'],  // create session with this user (stripe customer)
+            customer_update: { address: 'auto', name: 'auto', shipping: 'auto' },
+            billing_address_collection: 'auto',
+            success_url: `http://${Astro.url.host}/register?ssid={CHECKOUT_SESSION_ID}`,  // {CHECKOUT_SESSION_ID} is replaced with the stripe id
+            line_items: [
+                {
+                    adjustable_quantity: { enabled: false },
+                    quantity: 1,
+                    price: selectedPlanId  // TODO: is this safe? this is directly coming from query params
+                }
+            ],
+            subscription_data: {
+                trial_period_days: 7
+            }
+        })
+    })
+    .then(checkoutSession => checkoutSession === null ? null : checkoutSession.url)
+    .catch(e => null);
+
+    if (newCheckoutSessionUrl === null) {
+        // user is not authenticated, redirect to initial route
+        return Astro.redirect('/register', 302);
+    } else {
+        // redirect user to new stripe checkout session
+        return Astro.redirect(newCheckoutSessionUrl, 302);
+    }
+} else if (stripeSessionId !== null) {
+    // user has returned from the stripe checkout session
+    // get the stripe checkout session and (in the body) check if it was successfull
+    try {
+        returnedStripeSession = await STRIPE.checkout.sessions.retrieve(stripeSessionId);
+        stepIndex = 3;
+    } catch {
+        returnedStripeSession = null;
+        stepIndex = 2;
+    }
+}
+---
+<FullScreenLayout title="Get Noter" description="">
+    <div class="side">
+        <h1>Get Noter</h1>
+        <p>Your notes and grades are about to level up.</p>
+    </div>
+
+    <div class="side">
+        <div class="steps">
+            { REGISTRATION_STEPS.map((step, i) => <span class:list={{ "step": true, "current": stepIndex === i }}>{ step }</span>)}
+        </div>
+
+        {() => {
+            if (accountVerified !== null) {
+                if (accountVerified) {
+                    return (
+                        <h2>Email verified successfully</h2>
+                        <p>Let's select your plan for Noter. After you select your plan, you'll checkout.</p>
+                        <ButtonLink href="/plans">Continue to plans</ButtonLink>
+                    )
+                } else {
+                    return (
+                        <h2>Email verification failed</h2>
+                        <p>Try clicking the link in your inbox again or resending the email.</p>
+                    )
+                }
+            } else if (returnedStripeSession !== null) {
+                if (returnedStripeSession.payment_status === 'unpaid') {
+                    return (
+                        <h2>You're almost there</h2>
+                        <p>Currently, your subscription is unpaid. Please try waiting for your card to process, or return and try again.</p>
+                        <ButtonLink href={returnedStripeSession.url || '/plans'}>Return</ButtonLink>
+                    )
+                } else if (returnedStripeSession.status === 'complete') {
+                    return (
+                        <h2>You're all set</h2>
+                        <p><strong>Thank you for getting Noter!</strong> If you want to continue to the Noter app, click continue.</p>
+                        <ButtonLink href="https://app.getnoter.com">Continue to Noter</ButtonLink>
+                    )
+                }
+            } else if (stripeSessionId !== null) {
+                return (
+                    <h2>Checkout error</h2>
+                    <p>It looks like something happened on our end. Please select your plan again.</p>
+                    <ButtonLink href="/plans">Confirm plan</ButtonLink>
+                )
+            } else {
+                return <RegisterForm client:load />
+            }
+        }}
+    </div>
+</FullScreenLayout>
+<style>
+    .steps {
+        border: #000000 2px solid;
+        font-size: 0.75em;
+        margin-bottom: 1rem;
+        border-radius: 1rem;
+        text-align: center;
+
+        display: flex;
+        overflow: hidden;
+        gap: 1rem;
+    }
+
+    .step {
+        padding: 1rem;
+        width: 100%;
+        height: 100%;
+    }
+
+    .step.current {
+        font-weight: bold;
+        background: #000000;
+        color: #ffffff;
+    }
+
+	@media only screen and (max-width: 675px) {
+        .steps {
+            flex-direction: column;
+        }
+
+        .step {
+            padding-right: 0;
+            padding-left: 0;
+        }
+    }
+</style>

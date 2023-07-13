@@ -1,37 +1,10 @@
 ---
-export const prerender = true;
-
 import ExpandableQA from "../components/plans/ExpandableQA";
 import Plan from "../components/plans/Plan.astro";
 import CenteredLayout from "../layouts/CenteredLayout.astro";
+import { getPlans } from "./async/utils";
 
-const FREE_FEATURES = [
-    ["Take all the notes you want", true],
-    ["Premium, world-class editor", true],
-    ["Mobile and Desktop sign in", true],
-    ["Note summarization", false],
-    ["One-click study guides", false],
-    ["Autonote", false],
-    ["Note quizzes", false],
-    ["Share with others who have Noter", false],
-    ["Public note links (view only)", false],
-    ["Get 3 months free", false]
-];
-
-const MONTHLY_FEATURES = [
-    ["Take all the notes you want", true],
-    ["Premium, world-class editor", true],
-    ["Mobile and Desktop sign in", true],
-    ["Note summarization", true],
-    ["One-click study guides", true],
-    ["Autonote", true],
-    ["Note quizzes", true],
-    ["Share with others who have Noter", true],
-    ["Public note links (view only)", true],
-    ["Get 3 months free", false]
-];
-
-const ANNUAL_FEATURES = FREE_FEATURES.map((entry) => [entry[0], true]);
+const plans = await getPlans('usd');
 ---
 
 <CenteredLayout title="Get Noter, your AI-powered notebook."
@@ -39,9 +12,9 @@ const ANNUAL_FEATURES = FREE_FEATURES.map((entry) => [entry[0], true]);
     <h1>Plans</h1>
 
     <div class="plans">
-        <Plan id={1} title="Noter Free" price="Free" unit={null} features={FREE_FEATURES} freeTrialIncluded={false} />
-        <Plan id={2} title="Noter Monthly" price="$6" unit="per month" features={MONTHLY_FEATURES} freeTrialIncluded={false} />
-        <Plan id={2} title="Noter Annually" price="$54" unit="per year" features={ANNUAL_FEATURES} freeTrialIncluded={true} />
+        { plans.map(p => (
+            <Plan product={p.product} price={p.price} />
+        ) ) }
     </div>
 
     <div class="faq">

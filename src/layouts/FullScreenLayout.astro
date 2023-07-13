@@ -1,0 +1,45 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ContactForm from "../components/form/ContactForm";
+
+export interface Props {
+	title: string;
+	description: string;
+}
+
+const props = Astro.props as Props;
+---
+<style>
+    .fullScreen {
+        font-size: 2em;
+
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+
+        min-height: calc(100vh - var(--nav-height));
+    }
+
+    .fullScreen :global(.side) {
+        padding: 5rem;
+    }
+
+    @media only screen and (max-width: 500px) {
+        .fullScreen :global(.side) {
+            padding: 0;
+        }
+
+        .fullScreen {
+            display: block;
+            margin: 1rem;
+            font-size: 1.75em;
+        }
+    }
+</style>
+<Layout {...props} navBarFixed={false}>
+    <div class="fullScreen">
+        <slot />
+    </div>
+</Layout>

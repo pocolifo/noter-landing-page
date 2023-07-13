@@ -17,12 +17,17 @@ const { fixed } = Astro.props;
         </a>
 
         <div class="right">
-            <Link hnk href="/plans">Get Noter</Link>
+            <Link hnk href="/plans">Plans</Link>
+            <Link hnk href="/register">Get Noter</Link>
         </div>
     </div>
 </nav>
 
 <style>
+    :root {
+        --nav-height: 96px;
+    }
+
     nav {
         top: 0;
         width: 100%;
@@ -32,6 +37,7 @@ const { fixed } = Astro.props;
         z-index: 100000;
         backdrop-filter: blur(1rem);
         -webkit-backdrop-filter: blur(1rem); /* for Safari support */
+        height: var(--nav-height);
     }
 
     nav.fixed {
@@ -59,8 +65,13 @@ const { fixed } = Astro.props;
     }
 
     @media only screen and (max-width: 1000px) {
+        :root {
+            --nav-height: 96px;
+        }
+        
         nav {
             font-size: 1.25em;
+            height: 72px;
         }
 
         h2 {

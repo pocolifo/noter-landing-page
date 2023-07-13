@@ -19,7 +19,7 @@ form textarea {
     height: 256px;
 }
 
-form select, textarea, input {
+form select, form textarea, form input, form button {
     border: #000000 1px solid;
     padding: 1rem;
     border-radius: 0.5rem;
@@ -28,7 +28,7 @@ form select, textarea, input {
     font-family: 'Inter';
 }
 
-form input[type="submit"]:enabled:hover {
+form input[type="submit"]:enabled:hover, form button:enabled:hover {
     cursor: pointer;
     background: #EEEEEE;
 }
