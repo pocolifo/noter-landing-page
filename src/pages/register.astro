@@ -23,7 +23,7 @@ if (verificationId !== null) {
             id: verificationId,
         })}`,
         {
-            method: "POST",
+            method: "GET",
             headers: {
                 Cookie: `authenticate=${Astro.cookies.get("authenticate").value}`,
             },
