@@ -1,0 +1,44 @@
+---
+import FullScreenLayout from "../layouts/FullScreenLayout.astro";
+import { API_URL, STRIPE } from "./async/utils";
+
+const returnPage = 'http://localhost:8788';
+
+let newPortalSessionUrl = await fetch(
+    API_URL,
+    {
+        headers: {
+            Cookie: `authenticate=${Astro.cookies.get("authenticate").value}`,
+        },
+    }
+)
+.then(response => response.json())
+.then(data => {
+    // when a plan to be bought is provided, create a stripe checkout session
+    return STRIPE.billingPortal.sessions.create({
+        customer: data['stripe_id'],
+        return_url: returnPage,
+        configuration: 'bpc_1NUiIMExIIMbGntrg0PnWHH2'
+    })
+})
+.then(sessionUrl => sessionUrl === null ? null : sessionUrl.url)
+.catch(e => null);
+
+if (newPortalSessionUrl === null) {
+    // user is not authenticated, redirect to initial route
+    return Astro.redirect(returnPage, 302);
+} else {
+    // redirect user to new stripe checkout session
+    return Astro.redirect(newPortalSessionUrl, 302);
+}
+---
+<FullScreenLayout title="Customer Portal" description="">
+    <div class="side">
+        <h1>Noter Customer Portal</h1>
+        <p>We're forwarding you to the customer portal right now. Give us a second.</p>
+    </div>
+
+    <div class="side">
+
+    </div>
+</FullScreenLayout>

@@ -6,6 +6,7 @@ interface Props {
 }
 
 const { fixed } = Astro.props;
+const hasAuthenticateCookie = Astro.cookies.has('authenticate');
 ---
 
 <nav class:list={{
@@ -17,8 +18,14 @@ const { fixed } = Astro.props;
         </a>
 
         <div class="right">
-            <Link hnk href="/plans">Plans</Link>
-            <Link hnk href="/register">Get Noter</Link>
+            { hasAuthenticateCookie ? (
+                <Link href="/portal">Portal</Link>
+            ) : (
+                <>
+                    <Link href="/plans">Plans</Link>
+                    <Link href="/register">Get Noter</Link>
+                </>
+            ) }
         </div>
     </div>
 </nav>

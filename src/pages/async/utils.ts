@@ -18,6 +18,8 @@ const NUMBERS = '0123456789';
 const PRINTABLE = " \t\n\r";
 const SAFE_CHARACTERS = ALPHABET + SYMBOLS + NUMBERS + PRINTABLE;
 
+export const RATE_LIMITED_MESSAGE = "In order to prevent spam, you need to wait a little while before submitting again.";
+
 export const STRIPE = new Stripe(import.meta.env.VITE_STRIPE_SECRET_KEY, { apiVersion: "2022-11-15" });
 
 
@@ -124,7 +126,7 @@ export async function checkRateLimit(context: APIContext) {
     // Check if the user is rate limited
     if ((await kv.get(ip)) !== null) {
         // Already submitted form. Respond with too many requests.
-        throw new Error("In order to prevent spam, you need to wait a little while before submitting again.");
+        throw new Error(RATE_LIMITED_MESSAGE);
     }
 }
 

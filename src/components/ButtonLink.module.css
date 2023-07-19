@@ -1,0 +1,22 @@
+.link {
+    display: block;
+    text-align: center;
+    padding: 1rem;
+    font-size: 22px;
+    border: none;
+    border-radius: 0.5rem;
+    background: #000000;
+    color: #ffffff;
+    text-decoration: none;
+
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.link:hover {
+    background: #444444;
+}
+
+.link:active {
+    transform: scale(0.9);
+    background: #666666;
+}
