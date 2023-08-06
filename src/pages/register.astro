@@ -1,8 +1,7 @@
 ---
-import type Stripe from "stripe";
 import RegisterForm from "../components/form/RegisterForm";
 import FullScreenLayout from "../layouts/FullScreenLayout.astro";
-import { API_URL, STRIPE } from "./async/utils";
+import { API_URL } from "./async/utils";
 import ButtonLink from "../components/ButtonLink";
 import EmailVerifier from "../components/register/EmailVerifier";
 import EmailVerifiedMessage from "../components/register/EmailVerifiedMessage";
@@ -52,48 +51,20 @@ async function getRegistrationStep() {
     return RegistrationStep.SELECT_PLAN;
 }
 
-async function createCheckoutSession(priceId: string) {
+async function createCheckoutSession(plan: string) {
     return await fetch(
-        API_URL,
+        `${API_URL}/stripe/create-checkout-session?${new URLSearchParams({
+            "plan": plan
+        })}`,
         {
+            method: 'POST',
             headers: {
                 Cookie: `authenticate=${Astro.cookies.get("authenticate").value}`,
             },
         }
     )
     .then(response => response.json())
-    .then(data => {
-        // when a plan to be bought is provided, create a stripe checkout session
-        return STRIPE.checkout.sessions.create({
-            allow_promotion_codes: true,
-            currency: 'usd',
-            mode: 'subscription',
-            customer: data['stripe_id'],  // create session with this user (stripe customer)
-            customer_update: { address: 'auto', name: 'auto', shipping: 'auto' },
-            billing_address_collection: 'auto',
-            payment_method_collection: 'if_required',
-            success_url: `http://${Astro.url.host}/register?ssid={CHECKOUT_SESSION_ID}`,  // {CHECKOUT_SESSION_ID} is replaced with the stripe id, TODO: it is unused as of right now though
-            automatic_tax: {
-                enabled: true
-            },
-            line_items: [
-                {
-                    adjustable_quantity: { enabled: false },
-                    quantity: 1,
-                    price: priceId  // TODO: is this safe? this is directly coming from query params
-                }
-            ],
-            // subscription_data: {
-            //     trial_period_days: 7,
-            //     trial_settings: {
-            //         end_behavior: {
-            //             missing_payment_method: 'pause'
-            //         }
-            //     },
-            // }
-        })
-    })
-    .then(checkoutSession => checkoutSession === null ? null : checkoutSession.url)
+    .then(data => data['url'])
     .catch(e => null);
 }
 
@@ -150,6 +121,7 @@ if (currentStep === RegistrationStep.SELECT_PLAN && selectedPlanId !== null) {
         } }
     </div>
 </FullScreenLayout>
+
 <style>
     .steps {
         border: #000000 2px solid;

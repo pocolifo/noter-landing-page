@@ -7,14 +7,14 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "wrangler pages dev dist --kv KV",
-    "astro": "astro"
+    "astro": "astro",
+    "cf": "astro build && npm run preview"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^6.5.1",
     "@astrojs/solid-js": "^2.2.0",
     "astro": "^2.7.2",
-    "solid-js": "^1.7.6",
-    "stripe": "^12.12.0"
+    "solid-js": "^1.7.6"
   },
   "devDependencies": {
     "@astrojs/sitemap": "^1.3.3",

@@ -21,10 +21,6 @@ This is the Noter landing page
 # Discord webhook URL
 VITE_DISCORD_CONTACT_WEBHOOK_URL=https://discord.com/api/webhooks/0123456789/abcdefghijklmnopqrstuvwxyz
 
-# Stripe API keys
-VITE_STRIPE_PUBLIC_KEY=pk_test_abcdefghijklmnopqrstuvwxyz
-VITE_STRIPE_SECRET_KEY=sk_test_abcdefghijklmnopqrstuvwxyz
-
 # This is the Noter backend root URL
 VITE_API_URL=http://127.0.0.1:8000
 ```

@@ -8,8 +8,9 @@ interface Props {
 
 const { title, description } = Astro.props as Props;
 
+const SITE_NAME = "Noter";
 const PAGE_URL = Astro.url;
-const SITE_URL = Astro.site || new URL("https://getnoter.com");
+const SITE_URL = Astro.site || new URL("https://www.getnoter.com");
 const KEYWORDS = "ai notetaking for schoool,ai notetaking summarizer,study guide generator,note app for college students";
 const graph: Graph = {
     "@context": "https://schema.org",
@@ -18,14 +19,13 @@ const graph: Graph = {
             "@type": "WebPage",
             "@id": PAGE_URL.toString(),
             dateModified: new Date().toISOString(),
-            author: "Noter.",
+            author: SITE_NAME,
             inLanguage: "en-US",
             isPartOf: {
                 "@type": "WebSite",
                 "@id": `${SITE_URL.toString()}#website`,
                 url: SITE_URL.toString(),
-                name: "Noter.",
-                alternateName: "Noter",
+                name: SITE_NAME,
                 description: description,
                 inLanguage: "en-US",
                 keywords: KEYWORDS,
@@ -33,8 +33,7 @@ const graph: Graph = {
                 publisher: {
                     "@type": "Organization",
                     "@id": `${SITE_URL.toString()}#organization`,
-                    name: "Noter.",
-                    alternateName: "Noter",
+                    name: SITE_NAME,
                     url: SITE_URL.toString(),
                     // TODO: logo -- need favicon
                 },
@@ -56,7 +55,7 @@ const graph: Graph = {
 <meta property="og:type" content="website" />
 <meta property="og:description" content={description} />
 <meta property="og:locale" content="en_US" />
-<meta property="og:site_name" content="Noter." />
+<meta property="og:site_name" content={SITE_NAME} />
 <meta property="og:image" content={`${SITE_URL}og.png`} />
 <meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="559" />
@@ -66,7 +65,7 @@ const graph: Graph = {
     content="Large black text reading 'Noter.' in a serif font layered on a white grid resembling graph paper."
 />
 
-<meta name="twitter:title" content="Noter." />
+<meta name="twitter:title" content={SITE_NAME} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content={`${SITE_URL}og.png`} />

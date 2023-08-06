@@ -9,7 +9,7 @@ const EXCLUDE_FROM_SITEMAP = ['/404', '/5xx', '/async/'];
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.getnoter.com',
-  trailingSlash: 'never',
+  trailingSlash: 'ignore',
   integrations: [
     solidJs(),
     sitemap({

@@ -23,11 +23,9 @@ export const post: APIRoute = async ctx => {
         try {
             const signUpResponse = await sendSignUpRequest(submission);
 
-            if (signUpResponse.status === 400) {
-                return new Response("Sorry, but a user with that email already exists.", { status: 400 });
-            }
-
-            await sendDiscordMessage(`
+            switch (signUpResponse.status) {
+                case 200:
+                    await sendDiscordMessage(`
 @everyone :partying_face: NEW USER!
 
 \`\`\`
@@ -38,12 +36,23 @@ Server Response:
 
 ${await signUpResponse.text()}
 \`\`\``);
+        
+                    await rateLimit(ctx, 60 * 60 * Math.random());
+                    return new Response("You're almost there! Please click the link we sent to your email address to verify it.", {
+                        status: 200,
+                        headers: signUpResponse.headers
+                    });
 
-            await rateLimit(ctx, 60 * 60 * Math.random());
-            return new Response("You're almost there! Please click the link we sent to your email address to verify it.", {
-                status: 200,
-                headers: signUpResponse.headers
-            });
+                case 400:
+                    return new Response("Sorry, but a user with that email already exists.", { status: 400 });
+                    
+                    
+                case 503:
+                    return new Response("User registration is currently closed. Please try again later!", { status: 503 });
+
+                default:
+                    return new Response("An error occurred on our end. Please try again later!", { status: 500 });
+            }
         } catch (e) {
             console.error(e)
             return new Response("Sorry, there was an error. Please try again later.", { status: 500 });

@@ -1,7 +1,6 @@
 import { getRuntime } from "@astrojs/cloudflare/runtime";
 import type { APIContext } from "astro";
 import { getMeaningOfBotScore } from "./turnstile";
-import Stripe from "stripe";
 
 // Constants
 const DISCORD_WEBHOOK = import.meta.env.VITE_DISCORD_CONTACT_WEBHOOK_URL;
@@ -19,8 +18,6 @@ const PRINTABLE = " \t\n\r";
 const SAFE_CHARACTERS = ALPHABET + SYMBOLS + NUMBERS + PRINTABLE;
 
 export const RATE_LIMITED_MESSAGE = "In order to prevent spam, you need to wait a little while before submitting again.";
-
-export const STRIPE = new Stripe(import.meta.env.VITE_STRIPE_SECRET_KEY, { apiVersion: "2022-11-15" });
 
 
 // Miscellaneous
@@ -148,37 +145,13 @@ export function getBotScoreString(context: APIContext): string {
 }
 
 // Stripe
-export interface StripeNoterPlan {
-    product: Stripe.Product;
-    price: Stripe.Price;
+export interface NoterPlan {
+    id: string;
+    price: string | null;
+    period: string | null;
+    features: string[];
 }
 
-export async function getPlans(currency: string) {
-    const prices = await STRIPE.prices.list({
-        expand: ['data.product'],
-        currency: currency,
-        active: true,
-        lookup_keys: ['noter_premium_monthly', 'noter_premium_yearly']
-    });
-
-    let plans = [];
-
-    for (let price of prices.data) {
-        let product: Stripe.Product;
-    
-        if (typeof price.product === "string") {
-            product = await STRIPE.products.retrieve(price.product);
-        } else {
-            product = price.product as Stripe.Product;
-        }
-    
-        let plan: StripeNoterPlan = {
-            price: price,
-            product: product
-        }
-    
-        plans.push(plan);
-    }
-
-    return plans;
+export async function getPlans(): Promise<Record<string, NoterPlan>> {
+    return await (await fetch(`${API_URL}/stripe/plans`)).json();
 }
