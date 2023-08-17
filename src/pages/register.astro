@@ -15,6 +15,7 @@ enum RegistrationStep {
     DONE = 3
 }
 
+const stripeSessionId = Astro.url.searchParams.get("ssid");  // when stripe checkout finishes
 const verificationId = Astro.url.searchParams.get("vid");    // when an email is sent and the user clicks on the verification link
 const selectedPlanId = Astro.url.searchParams.get("p");      // the stripe price id of the price to be bought
 const restartRegistration = Astro.url.searchParams.has('r'); // should restart registration?
@@ -28,23 +29,20 @@ async function getRegistrationStep() {
         return RegistrationStep.CREATE_ACCOUNT;
     }
 
-    const response = await fetch(API_URL, { headers: { Cookie: `authenticate=${Astro.cookies.get("authenticate").value}` } } );
-    const data = await response.json();
-
     // API responds with data[user] = null when user is not authenticated properly.
     // Have to CREATE_ACCOUNT
-    if ('user' in data) {
+    if (Astro.locals.user === null) {
         return RegistrationStep.CREATE_ACCOUNT;
     }
     
     // If not data[user][email_verified], user haven't verified email yet.
-    if (!data['email_verified']) {
+    if (!Astro.locals.user.email_verified) {
         return RegistrationStep.VERIFY_EMAIL;
     }
 
     // If the user has_noter_access, the user must have gone through Stripe Checkout.
     // User is done with the process.
-    if (data['has_noter_access']) {
+    if (Astro.locals.user.email_verified && stripeSessionId !== null) {
         return RegistrationStep.DONE;
     }
 
@@ -107,7 +105,7 @@ if (currentStep !== RegistrationStep.DONE && restartRegistration) {
                 
                 case RegistrationStep.VERIFY_EMAIL:
                     if (verificationId === null) {
-                        return <RegisterForm client:only defaultSubmittedRegistration={true} />
+                        return <RegisterForm client:only defaultSubmittedRegistration={true} emailSentTo={Astro.locals.user?.email} />
                     } else {
                         return <EmailVerifier verificationId={ verificationId } />
                     }
@@ -118,7 +116,8 @@ if (currentStep !== RegistrationStep.DONE && restartRegistration) {
                 case RegistrationStep.DONE:
                     return (
                         <h2>You're all set</h2>
-                        <p><strong>Thank you for getting Noter!</strong> If you want to continue to the Noter app, click continue.</p>
+                        <p><strong>Thank you for getting Noter!</strong> Please be aware that it might take our systems some time to process your purchase, and you may not have Noter immediately.</p>
+                        <p>However, our systems might have processed it already. If you want to continue to the Noter app, click continue!</p>
                         <ButtonLink href={ import.meta.env.VITE_NOTER_APP_URL }>Continue to Noter</ButtonLink>
                     )
 

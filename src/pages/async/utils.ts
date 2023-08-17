@@ -79,7 +79,7 @@ export function ensureNotFile(formData: FormData, key: string): string {
 export function ensureStringLength(formData: FormData, key: string, minLength: number, maxLength: number): string {
     let val = ensureNotFile(formData, key);
     
-    if (val.length > maxLength || val.length < minLength || !isStringSafe(val)) throw new Error(`Invalid ${formatKey(key)}: it must be ${minLength}-${maxLength} of characters that can be typed on a United States English keyboard.`);
+    if (val.length > maxLength || val.length < minLength || !isStringSafe(val)) throw new Error(`${formatKey(key)} must be ${minLength}-${maxLength} of characters that can be typed on a United States English keyboard.`);
 
     return val;
 }

@@ -77,3 +77,7 @@ form input[type="submit"]:disabled, form button:disabled {
     justify-content: flex-start;
     gap: 8px;
 }
+
+.hidden {
+    display: none;
+}

@@ -3,9 +3,11 @@ import Turnstile from "./Turnstile";
 
 import LoadingSpinner from "../LoadingSpinner";
 import styles from './Form.module.css';
+import { ensureEmail, ensureGoodPassword } from "../../pages/async/utils";
 
 interface Props {
     defaultSubmittedRegistration: boolean;
+    emailSentTo?: string;
 }
 
 export default function RegisterForm(props: Props) {
@@ -14,7 +16,38 @@ export default function RegisterForm(props: Props) {
     const [ submissionSuccess, setSubmissionSuccess ] = createSignal<boolean>(false);
     const [ submittedRegistration, setSubmittedRegistration ] = createSignal<boolean>(props.defaultSubmittedRegistration);
     const [ submittedResend, setSubmittedResend ] = createSignal<boolean>(false);
+
     const [ emailAddress, setEmailAddress ] = createSignal<string>('');
+    const [ emailFeedback, setEmailFeedback ] = createSignal<string | null>(null);
+    
+    const [ password, setPassword ] = createSignal<string>('');
+    const [ passwordFeedback, setPasswordFeedback ] = createSignal<string | null>(null);
+
+    const [ confirmPassword, setConfirmPassword ] = createSignal<string>('');
+
+    createEffect(() => {
+        let fd = new FormData();
+        fd.append('password', password());
+        
+        try {
+            ensureGoodPassword(fd, 'password');
+            setPasswordFeedback(null);
+        } catch (err) {
+            setPasswordFeedback(err.message);
+        }
+    });
+
+    createEffect(() => {
+        let fd = new FormData();
+        fd.append('email', emailAddress());
+        
+        try {
+            ensureEmail(fd, 'email');
+            setEmailFeedback(null);
+        } catch (err) {
+            setEmailFeedback(err.message);
+        }
+    });
 
     async function handleAsyncFormSubmission(e: SubmitEvent) {
         setFormSubmitting(true);
@@ -55,17 +88,29 @@ export default function RegisterForm(props: Props) {
                 <form method="post" enctype="multipart/form-data" action="/async/register" onSubmit={ async e => handleAsyncFormSubmission(e) }>
                     <div class={styles.field}>
                         <label for="email">Your email address</label>
-                        <input id="email" type="email" name="email" required onChange={ e => setEmailAddress(e.target.value) }/>
+                        <input id="email" type="email" name="email" required onKeyUp={ e => setEmailAddress(e.target.value) }/>
+                        <small classList={{
+                            [styles.formStatus]: true,
+                            [styles.hidden]: emailFeedback() === null
+                        }}>{ emailFeedback() }</small>
                     </div>
                     
                     <div class={styles.field}>
                         <label for="password">Your password</label>
-                        <input id="password" type="password" name="password" required />
+                        <input id="password" type="password" name="password" required onKeyUp={ e => setPassword(e.target.value) } />
+                        <small classList={{
+                            [styles.formStatus]: true,
+                            [styles.hidden]: passwordFeedback() === null
+                        }}>{ passwordFeedback() }</small>
                     </div>
 
                     <div class={styles.field}>
                         <label for="confirm-password">Type your password again</label>
-                        <input id="confirm-password" type="password" name="confirm-password" required />
+                        <input id="confirm-password" type="password" name="confirm-password" required onKeyUp={ e => setConfirmPassword(e.target.value) }/>
+                        <small classList={{
+                            [styles.formStatus]: true,
+                            [styles.hidden]: password() === confirmPassword()
+                        }}>Your passwords must match, but they don't.</small>
                     </div>
 
 
@@ -82,7 +127,7 @@ export default function RegisterForm(props: Props) {
             }>
                 <form method="post" enctype="multipart/form-data" action="/async/resend-email" onSubmit={ async e => handleAsyncFormSubmission(e).then(() => setSubmittedResend(true)) }>
                     <h3>Didn't get the email?</h3>
-                    <p>We just sent an email to <strong>{ emailAddress() }</strong>. If you didn't get it, you can resend it if you need. Wrong email? Go back and rewrite your email and new password.</p>
+                    <p>We just sent an email to <strong>{ emailAddress() || props.emailSentTo }</strong>. If you didn't get it, you can resend it if you need. Wrong email? Go back and rewrite your email and new password.</p>
                     
                     <div class={styles.buttonFlex}>
                         <a class={`${styles.flex} ${styles.button}`} href="/register?r">
