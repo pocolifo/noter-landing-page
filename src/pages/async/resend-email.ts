@@ -1,18 +1,22 @@
 import type { APIRoute } from "astro";
 import { verifyTurnstileRequest } from './turnstile';
-import { API_URL, RATE_LIMITED_MESSAGE, getIpAddress } from './utils';
+import { API_URL, EXPIRED_TURNSTILE_RESPONSE, RATE_LIMITED_MESSAGE, getIpAddress } from './utils';
 
 export const post: APIRoute = async ctx => {
     const formData = await ctx.request.formData();
 
     // TURNSTILE VERIFICATION
-    if (!verifyTurnstileRequest(ctx, formData)) {
-        // Bad request. Did not pass Turnstile.
-        return new Response('The captcha has expired. Please refresh and retry.', { status: 400 });
+    try {
+        if (!await verifyTurnstileRequest(ctx, formData)) {
+            // Bad request. Did not pass Turnstile.
+            return EXPIRED_TURNSTILE_RESPONSE();
+        }
+    } catch {
+        return EXPIRED_TURNSTILE_RESPONSE();
     }
     
     try {
-        const cookie = ctx.request.headers.get('Cookie')
+        const cookie = ctx.request.headers.get('Cookie');
 
         if (cookie === null) {
             return new Response("Sorry, but you're not allowed to resend a verification email since you're not signed in.", { status: 400 });

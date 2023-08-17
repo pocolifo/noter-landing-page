@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 import { verifyTurnstileRequest } from './turnstile';
-import { API_URL, checkRateLimit, ensureEmail, ensureGoodPassword, ensureNotFile, getBotScoreString, getIpAddress, rateLimit, sendDiscordMessage } from './utils';
+import { API_URL, REGISTRATION_RATE_TOLERANCE, LOGIN_RATE_TOLERANCE, checkRateLimit, ensureEmail, ensureGoodPassword, ensureNotFile, getBotScoreString, getIpAddress, rateLimit, sendDiscordMessage, REGISTRATION_NAMESPACE, EXPIRED_TURNSTILE_RESPONSE } from './utils';
 
 interface UserFormSubmission {
     email: string;
@@ -11,13 +11,13 @@ export const post: APIRoute = async ctx => {
     const formData = await ctx.request.formData();
 
     // TURNSTILE VERIFICATION
-    if (!verifyTurnstileRequest(ctx, formData)) {
+    if (!await verifyTurnstileRequest(ctx, formData)) {
         // Bad request. Did not pass Turnstile.
-        return new Response('The captcha has expired. Please refresh and retry.', { status: 400 });
+        return EXPIRED_TURNSTILE_RESPONSE();
     }
 
     try {
-        await checkRateLimit(ctx);
+        await checkRateLimit(ctx, "registration", REGISTRATION_RATE_TOLERANCE);
         const submission = validateFormSubmission(formData);        
     
         try {
@@ -37,7 +37,7 @@ Server Response:
 ${await signUpResponse.text()}
 \`\`\``);
         
-                    await rateLimit(ctx, 60 * 60 * Math.random());
+                    await rateLimit(ctx, REGISTRATION_NAMESPACE, 60 * 60 * Math.random());
                     return new Response("You're almost there! Please click the link we sent to your email address to verify it.", {
                         status: 200,
                         headers: signUpResponse.headers

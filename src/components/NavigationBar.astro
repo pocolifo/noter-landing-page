@@ -1,4 +1,5 @@
 ---
+import { API_URL } from "../pages/async/utils";
 import Link from "./Link.astro";
 
 interface Props {
@@ -6,7 +7,14 @@ interface Props {
 }
 
 const { fixed } = Astro.props;
-const hasAuthenticateCookie = Astro.cookies.has('authenticate');
+const authCookie = Astro.cookies.get('authenticate');
+let isAuthenticated = false;
+
+if (authCookie.value !== undefined) {
+    const response = await fetch(`${API_URL}`, { headers: Astro.request.headers });
+    const data: object = await response.json();
+    isAuthenticated = !('user' in data);
+}
 ---
 
 <nav class:list={{
@@ -18,11 +26,16 @@ const hasAuthenticateCookie = Astro.cookies.has('authenticate');
         </a>
 
         <div class="right">
-            { hasAuthenticateCookie ? (
-                <Link href="/portal">Portal</Link>
+            <Link href="/plans">Plans</Link>
+
+            { isAuthenticated ? (
+                <>
+                    <Link href="/sign/out">Sign Out</Link>
+                    <Link href="/billing">Billing</Link>
+                </>
             ) : (
                 <>
-                    <Link href="/plans">Plans</Link>
+                    <Link href="/sign/in">Sign In</Link>
                     <Link href="/register">Get Noter</Link>
                 </>
             ) }

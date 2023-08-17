@@ -1,0 +1,16 @@
+---
+import Link from "../../components/Link.astro";
+import SignInForm from "../../components/form/SignInForm";
+import FullScreenLayout from "../../layouts/FullScreenLayout.astro";
+
+---
+<FullScreenLayout title="Sign in to Noter" description="">
+    <div class="side">
+        <h1>Sign in to Noter</h1>
+        <p>Don't have an account? <Link href="/register">Just. Get. Noter.</Link> Seriously... what are you doing?</p>
+    </div>
+
+    <div class="side">
+        <SignInForm client:load />
+    </div>
+</FullScreenLayout>

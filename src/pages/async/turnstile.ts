@@ -7,6 +7,10 @@ interface TurnstileResponse {
 }
 
 export async function verifyTurnstileRequest(context: APIContext, formData: FormData) {
+    if (!formData.has('cf-turnstile-response')) {
+        return false;
+    }
+
     const ip = getIpAddress(context);
 
     // TURNSTILE VERIFICATION

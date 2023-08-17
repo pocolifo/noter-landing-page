@@ -1,10 +1,10 @@
 ---
+import ButtonLink from "../components/ButtonLink";
 import RegisterForm from "../components/form/RegisterForm";
+import EmailVerifiedMessage from "../components/register/EmailVerifiedMessage.astro";
+import EmailVerifier from "../components/register/EmailVerifier.astro";
 import FullScreenLayout from "../layouts/FullScreenLayout.astro";
 import { API_URL } from "./async/utils";
-import ButtonLink from "../components/ButtonLink";
-import EmailVerifier from "../components/register/EmailVerifier";
-import EmailVerifiedMessage from "../components/register/EmailVerifiedMessage";
 
 const REGISTRATION_STEPS = ['Create account', 'Verify email', 'Select plan', 'Done!'];
 
@@ -17,6 +17,7 @@ enum RegistrationStep {
 
 const verificationId = Astro.url.searchParams.get("vid");    // when an email is sent and the user clicks on the verification link
 const selectedPlanId = Astro.url.searchParams.get("p");      // the stripe price id of the price to be bought
+const restartRegistration = Astro.url.searchParams.has('r'); // should restart registration?
 
 async function getRegistrationStep() {
     const cookie = Astro.cookies.get('authenticate').value;
@@ -68,11 +69,13 @@ async function createCheckoutSession(plan: string) {
     .catch(e => null);
 }
 
-
 let newCheckoutSessionUrl: string | null = null;
 const currentStep = await getRegistrationStep();
 
-if (currentStep === RegistrationStep.SELECT_PLAN && selectedPlanId !== null) {
+if (currentStep !== RegistrationStep.DONE && restartRegistration) {
+    // TODO: delete old user
+    return Astro.redirect('/sign/out?r=r', 302);
+} else if (currentStep === RegistrationStep.SELECT_PLAN && selectedPlanId !== null) {
     // get url of a new stripe checkout session
     // fetch user stripe_id
     newCheckoutSessionUrl = await createCheckoutSession(selectedPlanId);
@@ -100,10 +103,14 @@ if (currentStep === RegistrationStep.SELECT_PLAN && selectedPlanId !== null) {
         { () => {
             switch (currentStep) {
                 case RegistrationStep.CREATE_ACCOUNT:
-                    return <RegisterForm client:load />
+                    return <RegisterForm client:only defaultSubmittedRegistration={false} />
                 
                 case RegistrationStep.VERIFY_EMAIL:
-                    return <EmailVerifier client:load verificationId={ verificationId } />
+                    if (verificationId === null) {
+                        return <RegisterForm client:only defaultSubmittedRegistration={true} />
+                    } else {
+                        return <EmailVerifier verificationId={ verificationId } />
+                    }
                 
                 case RegistrationStep.SELECT_PLAN:
                     return <EmailVerifiedMessage />
@@ -112,11 +119,11 @@ if (currentStep === RegistrationStep.SELECT_PLAN && selectedPlanId !== null) {
                     return (
                         <h2>You're all set</h2>
                         <p><strong>Thank you for getting Noter!</strong> If you want to continue to the Noter app, click continue.</p>
-                        <ButtonLink href="https://app.getnoter.com">Continue to Noter</ButtonLink>
+                        <ButtonLink href={ import.meta.env.VITE_NOTER_APP_URL }>Continue to Noter</ButtonLink>
                     )
 
                 default:
-                    return <RegisterForm client:load />
+                    return <RegisterForm client:only defaultSubmittedRegistration={false} />
             }
         } }
     </div>

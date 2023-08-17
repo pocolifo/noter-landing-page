@@ -1,0 +1,23 @@
+---
+import FullScreenLayout from "../../layouts/FullScreenLayout.astro";
+
+const CONTINUE_TO = {
+    'r': '/register',
+    'h': '/'
+};
+
+const redirectTo = Astro.url.searchParams.get('r') || 'h';
+const redirectUrl = CONTINUE_TO[redirectTo] || '/';
+
+Astro.cookies.set('authenticate', '', { expires: new Date(0), path: '/' }); // hack to delete cookie b/c Astro.cookies.delete doesn't work
+
+return Astro.redirect(redirectUrl, 302);
+---
+<FullScreenLayout title="Signing you out..." description="">
+    <div class="side">
+        <h1>Signing you out...</h1>
+        <p>Give us a second</p>
+    </div>
+
+    <div class="side"></div>
+</FullScreenLayout>

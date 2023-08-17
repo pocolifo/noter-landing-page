@@ -17,7 +17,24 @@ const NUMBERS = '0123456789';
 const PRINTABLE = " \t\n\r";
 const SAFE_CHARACTERS = ALPHABET + SYMBOLS + NUMBERS + PRINTABLE;
 
+export const REGISTRATION_NAMESPACE = "registration";
+export const REGISTRATION_RATE_TOLERANCE = 3;
+export const LOGIN_NAMESPACE = "login";
+export const LOGIN_RATE_TOLERANCE = 5;
+export const CONTACT_NAMESPACE = "contact";
+export const CONTACT_RATE_TOLERANCE = 1;
+
 export const RATE_LIMITED_MESSAGE = "In order to prevent spam, you need to wait a little while before submitting again.";
+
+export const EXPIRED_TURNSTILE_RESPONSE = () => new Response(
+    'The captcha has expired. Please refresh and retry.',
+    {
+        status: 400,
+        headers: {
+            'X-GetNoter-Turnstile': 'refresh'
+        }
+    }
+);
 
 
 // Miscellaneous
@@ -115,25 +132,29 @@ export function getIpAddress(context: APIContext) {
     return context.request.headers.get('CF-Connecting-IP') || context.clientAddress || '127.0.0.1';
 }
 
-export async function checkRateLimit(context: APIContext) {
+export async function checkRateLimit(context: APIContext, namespace: string, tolerance: number) {
     const ip = getIpAddress(context);
     const runtime = getRuntime(context.request);
     const kv = (runtime.env as Env).KV;
+    const key = `${ip}:${namespace}`;
+    const requestCount = Number(await kv.get(key));
 
     // Check if the user is rate limited
-    if ((await kv.get(ip)) !== null) {
+    if (requestCount > tolerance) {
         // Already submitted form. Respond with too many requests.
         throw new Error(RATE_LIMITED_MESSAGE);
     }
 }
 
-export async function rateLimit(context: APIContext, seconds: number) {
+export async function rateLimit(context: APIContext, namespace: string, resetSeconds: number) {
     const ip = getIpAddress(context);
     const runtime = getRuntime(context.request);
     const kv = (runtime.env as Env).KV;
+    const key = `${ip}:${namespace}`;
+    const newRequestCount = Number(await kv.get(key)) + 1;
 
-    await kv.put(ip, '', {
-        expirationTtl: seconds // Seconds between submissions
+    await kv.put(`${ip}:${namespace}`, `${newRequestCount}`, {
+        expirationTtl: resetSeconds // Seconds between submissions
     });
 }
 

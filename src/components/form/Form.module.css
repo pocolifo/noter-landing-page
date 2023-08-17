@@ -19,18 +19,25 @@ form textarea {
     height: 256px;
 }
 
-form select, form textarea, form input, form button {
+form select, form textarea, form input, form button, .button {
     border: #000000 1px solid;
     padding: 1rem;
     border-radius: 0.5rem;
     font-size: 0.75em;
     background: #FFFFFF;
     font-family: 'Inter';
+    text-decoration: none;
+    color: #000000;
 }
 
-form input[type="submit"]:enabled:hover, form button:enabled:hover {
+form input[type="submit"]:enabled:hover, form button:enabled:hover, .button:enabled:hover, form a:hover {
     cursor: pointer;
     background: #EEEEEE;
+}
+
+form input[type="submit"]:disabled, form button:disabled {
+    background: #F1F1F1;
+    color: #999999;
 }
 
 .formStatus {
@@ -55,4 +62,18 @@ form input[type="submit"]:enabled:hover, form button:enabled:hover {
 
 .success::before {
     content: 'Success: ';
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.buttonFlex {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
 }

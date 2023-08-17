@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import contactUsMetadata from "../../resources/contact-us-metadata.json";
 import { verifyTurnstileRequest } from './turnstile';
-import { checkRateLimit, ensureEmail, ensureOption, ensureStringLength, getBotScoreString, getIpAddress, rateLimit, sendDiscordMessage } from './utils';
+import { CONTACT_NAMESPACE, CONTACT_RATE_TOLERANCE, EXPIRED_TURNSTILE_RESPONSE, checkRateLimit, ensureEmail, ensureOption, ensureStringLength, getBotScoreString, getIpAddress, rateLimit, sendDiscordMessage } from './utils';
 
 
 interface ContactFormSubmission {
@@ -15,14 +15,14 @@ export const post: APIRoute = async ctx => {
     const formData = await ctx.request.formData();
 
     // TURNSTILE VERIFICATION
-    if (!verifyTurnstileRequest(ctx, formData)) {
+    if (!await verifyTurnstileRequest(ctx, formData)) {
         // Bad request. Did not pass Turnstile.
-        return new Response('The captcha has expired. Please refresh and retry.', { status: 400 });
+        return EXPIRED_TURNSTILE_RESPONSE();
     }
 
     try {
         const submission = validateFormSubmission(formData);        
-        await checkRateLimit(ctx);
+        await checkRateLimit(ctx, CONTACT_NAMESPACE, CONTACT_RATE_TOLERANCE);
     
         try {
             await sendDiscordMessage(`\`\`\`
@@ -39,7 +39,7 @@ ${submission.text}
             return new Response("Sorry, we couldn't receive your message. Please try again later.", { status: 500 });
         }
     
-        await rateLimit(ctx, 60 * 60 * 24 * 7 * Math.random());
+        await rateLimit(ctx, CONTACT_NAMESPACE, 60 * 60 * 24 * 7 * Math.random());
         return new Response("We've received your message, and we'll get back to you in email as soon as we can.", { status: 200 });
     } catch (error) {
         if (error instanceof Error) {

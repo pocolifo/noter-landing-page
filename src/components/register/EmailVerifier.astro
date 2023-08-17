@@ -1,0 +1,22 @@
+---
+import { API_URL } from "../../pages/async/utils";
+import EmailVerifiedMessage from "./EmailVerifiedMessage.astro";
+
+interface Props {
+    verificationId: string | null;
+}
+
+const url = `${API_URL}/verify?${new URLSearchParams({
+    id: Astro.props.verificationId || '',
+})}`;
+
+const verification = await fetch(url, { method: 'POST' });
+---
+{ verification.status === 204 ? (
+    <EmailVerifiedMessage />
+) : (
+    <>
+        <h2>Email verification failed</h2>
+        <p>Try clicking the link in your inbox again or resending the email.</p>
+    </>
+) }

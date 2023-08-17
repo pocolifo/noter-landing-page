@@ -3,7 +3,7 @@ import solidJs from "@astrojs/solid-js";
 import cloudflare from "@astrojs/cloudflare";
 import sitemap from "@astrojs/sitemap";
 import htmlMinifier from "astro-html-minifier";
-const EXCLUDE_FROM_SITEMAP = ['/404', '/5xx', '/async/'];
+const EXCLUDE_FROM_SITEMAP = ['/404', '/5xx', '/async/', '/billing'];
 
 
 // https://astro.build/config

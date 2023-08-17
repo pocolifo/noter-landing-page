@@ -9,6 +9,7 @@ This is the Noter landing page
 - Stripe account or API keys (public and secret keys)
 - Discord webhook
 - [Noter backend](https://github.com/pocolifo/noter-backend)
+- (OPTIONAL) [Noter app](https://github.com/pocolifo/noter-app)
 
 ### Setup procedure
 1. Get your Stripe API keys, Discord webhook URL, and run the Noter backend
@@ -23,6 +24,9 @@ VITE_DISCORD_CONTACT_WEBHOOK_URL=https://discord.com/api/webhooks/0123456789/abc
 
 # This is the Noter backend root URL
 VITE_API_URL=http://127.0.0.1:8000
+
+# The URL to the actual Noter app
+VITE_NOTER_APP_URL=https://app.getnoter.com
 ```
 
 ### Development
