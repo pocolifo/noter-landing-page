@@ -1,0 +1,13 @@
+.feedback {
+    font-size: 0.75em;
+    color: #ff0000;
+}
+
+.feedback.success {
+    color: #10b981;
+}
+
+.feedback :global(svg) {
+    vertical-align: middle;
+    margin: 4px;
+}

@@ -54,8 +54,12 @@ export async function sendDiscordMessage(message: string) {
 }
 
 // Validation
+function capitalize(str: string) {
+    return str[0].toUpperCase() + str.substring(1);
+}
+
 function formatKey(key: string) {
-    return key.replaceAll('-', ' ');
+    return capitalize(key.replaceAll('-', ' '));
 }
 
 function isStringSafe(s: string): boolean {
@@ -71,7 +75,7 @@ function isStringSafe(s: string): boolean {
 export function ensureNotFile(formData: FormData, key: string): string {
     let val = formData.get(key);
 
-    if (val === null || val instanceof File) throw new Error(`Invalid ${formatKey(key)}: it cannot be a file`);
+    if (val === null || val instanceof File) throw new Error(`${formatKey(key)} cannot be a file`);
 
     return val;
 }
@@ -88,7 +92,7 @@ export function ensureEmail(formData: FormData, key: string): string {
     let email = ensureStringLength(formData, key, MIN_EMAIL_LENGTH, MAX_EMAIL_LENGTH);
     
     if (email === null || !email.includes('@') || !email.includes('.') || email.includes(' ')) {
-        throw new Error(`Invalid ${formatKey(key)}: it must be a proper email address.`);
+        throw new Error(`${formatKey(key)} must be a proper email address.`);
     }
 
     return email;
@@ -98,7 +102,7 @@ export function ensureOption(formData: FormData, key: string, options: string[])
     let s = ensureNotFile(formData, "reason-for-contact");
 
     if (!options.includes(s)) {
-        throw new Error(`Invalid ${formatKey(key)}: the option you chose doesn't exist.`);
+        throw new Error(`The ${formatKey(key)} option you chose doesn't exist.`);
     }
 
     return s;

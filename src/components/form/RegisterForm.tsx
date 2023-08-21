@@ -4,6 +4,7 @@ import Turnstile from "./Turnstile";
 import LoadingSpinner from "../LoadingSpinner";
 import styles from './Form.module.css';
 import { ensureEmail, ensureGoodPassword } from "../../pages/async/utils";
+import Feedback from "./Feedback";
 
 interface Props {
     defaultSubmittedRegistration: boolean;
@@ -88,29 +89,20 @@ export default function RegisterForm(props: Props) {
                 <form method="post" enctype="multipart/form-data" action="/async/register" onSubmit={ async e => handleAsyncFormSubmission(e) }>
                     <div class={styles.field}>
                         <label for="email">Your email address</label>
-                        <input id="email" type="email" name="email" required onKeyUp={ e => setEmailAddress(e.target.value) }/>
-                        <small classList={{
-                            [styles.formStatus]: true,
-                            [styles.hidden]: emailFeedback() === null
-                        }}>{ emailFeedback() }</small>
+                        <input id="email" type="email" name="email" required onKeyUp={ e => setEmailAddress(e.target.value) } />
+                        <Feedback feedback={emailFeedback()} />
                     </div>
                     
                     <div class={styles.field}>
                         <label for="password">Your password</label>
                         <input id="password" type="password" name="password" required onKeyUp={ e => setPassword(e.target.value) } />
-                        <small classList={{
-                            [styles.formStatus]: true,
-                            [styles.hidden]: passwordFeedback() === null
-                        }}>{ passwordFeedback() }</small>
+                        <Feedback feedback={passwordFeedback()} />
                     </div>
 
                     <div class={styles.field}>
                         <label for="confirm-password">Type your password again</label>
                         <input id="confirm-password" type="password" name="confirm-password" required onKeyUp={ e => setConfirmPassword(e.target.value) }/>
-                        <small classList={{
-                            [styles.formStatus]: true,
-                            [styles.hidden]: password() === confirmPassword()
-                        }}>Your passwords must match, but they don't.</small>
+                        <Feedback feedback={ password() === confirmPassword() ? null : 'Your password does not match your password above.' } />
                     </div>
 
 

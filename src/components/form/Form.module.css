@@ -30,6 +30,14 @@ form select, form textarea, form input, form button, .button {
     color: #000000;
 }
 
+form input + div {
+    display: none;
+}
+
+form input:focus + div {
+    display: block;
+}
+
 form input[type="submit"]:enabled:hover, form button:enabled:hover, .button:enabled:hover, form a:hover {
     cursor: pointer;
     background: #EEEEEE;

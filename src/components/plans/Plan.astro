@@ -1,6 +1,7 @@
 ---
 import ButtonLink from "../ButtonLink";
 import type { NoterPlan } from "../../pages/async/utils";
+import IconCheck from "../../components/icon/IconCheck";
 
 interface Props extends NoterPlan {
     name: string;
@@ -22,8 +23,7 @@ const { features, period, price, name, id } = Astro.props;
         <div class="features">
             {features.map(feature => (
                 <div class="feature">
-                    { /* mdi:check https://icon-sets.iconify.design/mdi/check/ */ }
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M21 7L9 19l-5.5-5.5l1.41-1.41L9 16.17L19.59 5.59L21 7Z"/></svg>
+                    <IconCheck />
                     {feature}
                 </div>
             ))}
@@ -81,7 +81,7 @@ const { features, period, price, name, id } = Astro.props;
         align-items: center;
     }
 
-    .feature svg {
+    .feature :global(svg) {
         width: 32px;
         height: 32px;
         color: #000000;
